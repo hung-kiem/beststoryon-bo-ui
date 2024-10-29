@@ -3,14 +3,11 @@ import React, { useEffect, useState } from "react";
 import Loader from "@/components/commons/Loader";
 import classNames from "classnames";
 import useSidebar from "@hooks/useSidebar";
+import { useStatic } from "@/components/commons/StaticProvider/StaticProvider";
 
 export default function Template({ children }: { children: React.ReactNode }) {
-  const [loading, setLoading] = useState<boolean>(true);
+  const { loading } = useStatic();
   const { isSidebarCollapsed } = useSidebar();
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
 
   return (
     <div
@@ -24,8 +21,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     >
       <main>
         <div className="mx-auto p-4">
-          {loading && <Loader partial />}
-          {!loading && children}
+          {loading ? <Loader partial /> : children}
         </div>
       </main>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 interface Response {
   label: string | number;
@@ -23,10 +23,11 @@ export interface ApiResponse {
 }
 
 interface State extends ApiResponse {
-  loading?: boolean;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 }
 
-const Context = createContext<State>({
+const initialState: State = {
   channels: [],
   roles: [],
   roleActives: [],
@@ -39,16 +40,17 @@ const Context = createContext<State>({
   otpFunctions: [],
   smsStatus: [],
   emailStatus: [],
-});
+  loading: false,
+  setLoading: () => {},
+};
 
-function StaticProvider({
-  children,
-  data,
-}: {
-  children: ReactNode;
-  data: Readonly<ApiResponse>;
-}) {
-  return <Context.Provider value={data}>{children}</Context.Provider>;
+const Context = createContext<State>(initialState);
+
+function StaticProvider({ children }: { children: ReactNode }) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const value = { ...initialState, loading, setLoading };
+
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
 function useStatic() {
