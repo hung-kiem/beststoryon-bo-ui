@@ -19,24 +19,53 @@ function SidebarDropdown({
             "lg:absolute lg:left-18 lg:z-9999 lg:mt-[-36px] lg:bg-white lg:py-6 lg:opacity-0 lg:group-hover:opacity-100 dark:lg:bg-boxdark-2":
               isSidebarCollapsed,
             "relative mb-5.5 mt-4 pl-6": !isSidebarCollapsed,
-          },
+          }
         )}
       >
-        {item.map((item: any, index: number) => (
+        {item.map((menuItem: any, index: number) => (
           <li key={index}>
             <Link
-              href={item.route}
+              href={menuItem.route}
               className={classNames(
                 "group relative flex items-center gap-2.5 whitespace-nowrap rounded-md px-4 text-xs",
                 "font-medium text-black duration-300 ease-in-out hover:!text-secondary dark:text-white",
                 {
                   "!text-secondary dark:!text-secondary":
-                    pathname == item.route,
-                },
+                    pathname == menuItem.route,
+                }
               )}
             >
-              {item.label}
+              {menuItem.label}
             </Link>
+
+            {/* Menu cấp 3 */}
+            {menuItem.children && (
+              <ul
+                className={classNames("pl-6 mt-2 flex flex-col gap-2.5", {
+                  "lg:absolute lg:left-18 lg:z-9999 lg:mt-[-36px] lg:bg-white lg:py-6 lg:opacity-0 lg:group-hover:opacity-100 dark:lg:bg-boxdark-2":
+                    isSidebarCollapsed,
+                  "pl-6": !isSidebarCollapsed,
+                })}
+              >
+                {menuItem.children.map((subItem: any, subIndex: number) => (
+                  <li key={subIndex}>
+                    <Link
+                      href={subItem.route}
+                      className={classNames(
+                        "group relative flex items-center gap-2.5 whitespace-nowrap rounded-md px-4 text-xs",
+                        "font-medium text-black duration-300 ease-in-out hover:!text-secondary dark:text-white",
+                        {
+                          "!text-secondary dark:!text-secondary":
+                            pathname == subItem.route,
+                        }
+                      )}
+                    >
+                      {subItem.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ul>

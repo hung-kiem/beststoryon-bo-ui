@@ -12,7 +12,7 @@ interface MenuItems {
   label: string;
   route?: string;
   scope?: string;
-  children?: Array<Omit<MenuItems, "children">>;
+  children?: MenuItems[];
 }
 export const menuGroups: Array<{
   name?: string;
@@ -70,8 +70,18 @@ export const menuGroups: Array<{
         label: "UI Elements",
         route: "#",
         children: [
-          { label: "Alerts", route: "/ui/alerts" },
-          { label: "Buttons", route: "/ui/buttons" },
+          {
+            label: "Alerts",
+            route: "/ui/alerts",
+          },
+          {
+            label: "Buttons",
+            route: "/ui/buttons",
+            children: [
+              { label: "Primary Buttons", route: "/ui/buttons/primary" },
+              { label: "Secondary Buttons", route: "/ui/buttons/secondary" },
+            ],
+          },
         ],
       },
     ],
