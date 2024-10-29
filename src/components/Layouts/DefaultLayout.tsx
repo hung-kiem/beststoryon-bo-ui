@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import useSidebar from "@hooks/useSidebar";
 import classNames from "classnames";
 import useColorMode from "@hooks/useColorMode";

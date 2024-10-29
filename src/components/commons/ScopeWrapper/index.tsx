@@ -22,7 +22,7 @@ export default function ScopeWrapper({
   if (scopeIgnoreCheck) return children;
 
   if (scopes) {
-    if (scopes instanceof String) {
+    if (typeof scopes === "string") {
       if (anyScope && applicationScopes.includes(scopes)) {
         return children;
       }

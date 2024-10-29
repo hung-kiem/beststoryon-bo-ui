@@ -8,8 +8,8 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
 export const metadata: Metadata = {
   title: {
-    template: process.env.DEFAULT_TITLE_TEMPLATE,
-    default: process.env.DEFAULT_TITLE_VALUE,
+    template: process.env.DEFAULT_TITLE_TEMPLATE ?? "",
+    default: process.env.DEFAULT_TITLE_VALUE ?? "",
   },
   description: process.env.DEFAULT_TITLE_DESCRIPTION,
 };

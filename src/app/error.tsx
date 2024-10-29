@@ -1,9 +1,14 @@
 "use client";
 
 import Button from "@/components/ui/Buttons/Button";
-import { useRouter } from "next/navigation";
 
-export default function Error({ error }) {
+interface ErrorProps {
+  error: {
+    message: string;
+  };
+}
+
+export default function Error({ error }: ErrorProps) {
   return (
     <div
       className={"h-screen"}
