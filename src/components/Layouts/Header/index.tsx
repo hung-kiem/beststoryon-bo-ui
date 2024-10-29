@@ -17,24 +17,6 @@ const Header = () => {
     <header className="sticky top-0 z-99999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
       <div className="flex flex-grow items-center justify-between px-6 py-4 shadow-2">
         <div className="flex gap-4">
-          <Link href="/">
-            <Image
-              className="hidden dark:block"
-              width={100}
-              height={32}
-              src={"/images/logo/logo-light.svg"}
-              alt="Logo"
-              priority
-            />
-            <Image
-              className="dark:hidden"
-              src={"/images/logo/logo.svg"}
-              width={100}
-              height={32}
-              alt="Logo"
-              priority
-            />
-          </Link>
           <button
             onClick={() => {
               setIsSidebarCollapsed(!isSidebarCollapsed);

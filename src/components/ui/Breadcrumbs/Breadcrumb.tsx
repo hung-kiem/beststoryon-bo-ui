@@ -8,7 +8,7 @@ const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
       <ol className="flex items-center gap-2 text-sm">
         <li>
           <Link className="font-medium" href="/">
-            VNPAY Backend /
+            BestStoryOn /
           </Link>
         </li>
         <li className="font-medium text-primary">{pageName}</li>

@@ -24,65 +24,29 @@ export const menuGroups: Array<{
     modes: ["production", "development"],
     menuItems: [
       {
+        icon: <IconComponent />,
+        label: "Category",
+        route: "/category",
+      },
+      {
+        icon: <IconComponent />,
+        label: "Tag",
+        route: "/tag",
+      },
+      {
+        icon: <IconComponent />,
+        label: "Story",
+        route: "/story",
+      },
+      {
+        icon: <IconComponent />,
+        label: "Chapter",
+        route: "/chapter",
+      },
+      {
         icon: <IconDashboard />,
         label: "Dashboard",
         route: "/dashboard",
-      },
-      {
-        icon: <IconUser />,
-        label: "Quản lý người dùng",
-        children: [
-          {
-            label: "Danh sách người dùng",
-            route: "/users",
-          },
-          { label: "Lịch sử người dùng", route: "/users/history" },
-        ],
-      },
-    ],
-  },
-  {
-    name: "COMPONENTS",
-    modes: ["development"],
-    menuItems: [
-      {
-        icon: <IconComponent />,
-        label: "Components",
-        route: "/components",
-      },
-      {
-        icon: <IconCalendar />,
-        label: "Calendar",
-        route: "/calendar",
-      },
-      {
-        icon: <IconTable />,
-        label: "Tables",
-        route: "/tables",
-      },
-      {
-        icon: <IconChart />,
-        label: "Chart",
-        route: "/chart",
-      },
-      {
-        icon: <IconUIElements />,
-        label: "UI Elements",
-        route: "#",
-        children: [
-          {
-            label: "Alerts",
-            route: "/ui/alerts",
-          },
-          {
-            label: "Buttons",
-            route: "/ui/buttons",
-            children: [
-              { label: "Primary Buttons", route: "/ui/buttons/primary" },
-              { label: "Secondary Buttons", route: "/ui/buttons/secondary" },
-            ],
-          },
-        ],
       },
     ],
   },
