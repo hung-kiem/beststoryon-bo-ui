@@ -27,3 +27,6 @@ Thumbs.db
 .env
 .env.development
 .env.production
+
+#next.js
+.next/

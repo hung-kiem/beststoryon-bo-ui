@@ -1,3 +1,4 @@
 {
-  "/(page)/(signed)/dashboard/page": "app/(page)/(signed)/dashboard/page.js"
+  "/(page)/(signed)/dashboard/page": "app/(page)/(signed)/dashboard/page.js",
+  "/(page)/(signed)/[...catchAll]/page": "app/(page)/(signed)/[...catchAll]/page.js"
 }

@@ -13,6 +13,14 @@ const Sidebar = () => {
   const [pageName, setPageName] = useSessionStorage("pathname", "dashboard");
   const { sidebarOpen, setSidebarOpen, isSidebarCollapsed } = useSidebar();
 
+  console.log(
+    "mode",
+    menuGroups.filter(
+      (group) =>
+        !group.modes || group.modes.includes(process.env.NODE_ENV as any)
+    )
+  );
+
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside

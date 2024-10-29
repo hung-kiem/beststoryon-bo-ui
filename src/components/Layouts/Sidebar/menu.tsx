@@ -20,7 +20,8 @@ export const menuGroups: Array<{
   menuItems: Array<MenuItems>;
 }> = [
   {
-    modes: ["development"],
+    name: "PAGES",
+    modes: ["production", "development"],
     menuItems: [
       {
         icon: <IconDashboard />,
