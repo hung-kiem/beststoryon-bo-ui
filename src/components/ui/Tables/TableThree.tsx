@@ -12,6 +12,7 @@ interface TableProps<T> {
   columns: TableColumn<T>[];
   pageSize: number;
   loading: Boolean;
+  totalCount: number;
   onPageChange: (pageNo: number) => void;
   onPageSizeChange: (pageSize: number) => void;
 }
@@ -96,6 +97,7 @@ const TableThree = <T extends object>({
   columns,
   pageSize,
   loading,
+  totalCount,
   onPageChange,
   onPageSizeChange,
 }: TableProps<T>) => {
@@ -120,6 +122,7 @@ const TableThree = <T extends object>({
           <DataTable
             columns={columns}
             data={data}
+            paginationTotalRows={totalCount}
             customStyles={customStyles}
             theme={isDarkMode ? "solarized" : "lightmode"}
             pagination

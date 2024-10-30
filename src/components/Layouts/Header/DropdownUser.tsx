@@ -1,7 +1,6 @@
 import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import ClickOutside from "@/components/ClickOutside";
+import AvatarCanvas from "./AvatarCanvas";
 
 interface DropdownUserProps {
   username: string;
@@ -11,6 +10,10 @@ interface DropdownUserProps {
 const DropdownUser = ({ username, role }: DropdownUserProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const handleLogout = () => {
+    window.location.href = "/signIn";
+  };
+
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <div
@@ -19,21 +22,7 @@ const DropdownUser = ({ username, role }: DropdownUserProps) => {
         className="flex items-center gap-4"
       >
         <span className="h-12 w-12 rounded-full">
-          <Image
-            width={112}
-            height={112}
-            src={"/images/user/user-01.png"}
-            onError={(event) => {
-              if (event.currentTarget.parentElement) {
-                event.currentTarget.parentElement.classList.add("hidden");
-              }
-            }}
-            style={{
-              width: "auto",
-              height: "auto",
-            }}
-            alt="User"
-          />
+          <AvatarCanvas name={username} />
         </span>
 
         <svg
@@ -70,7 +59,10 @@ const DropdownUser = ({ username, role }: DropdownUserProps) => {
               </span>
             </li>
           </ul>
-          <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+          >
             <svg
               className="fill-current"
               width="22"

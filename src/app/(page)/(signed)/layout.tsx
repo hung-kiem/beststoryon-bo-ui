@@ -1,46 +1,58 @@
-import React, { ReactNode } from "react";
-import Header from "@/components/Layouts/Header";
-import Sidebar from "@/components/Layouts/Sidebar";
-import ModalUI from "@/components/ui/Modal";
-import StaticProvider, {
-  ApiResponse,
-} from "@/components/commons/StaticProvider/StaticProvider";
-import { staticApi } from "@hooks/api/env-config";
+"use client";
 
-export default async function Layout({
+import React from "react";
+import { usePathname } from "next/navigation";
+import { SWRConfig } from "swr";
+
+import "jsvectormap/dist/jsvectormap.css";
+import "flatpickr/dist/flatpickr.min.css";
+import "@/css/inter.css";
+import "@/css/style.css";
+
+import ModalUI from "@/components/ui/Modal";
+import Sidebar from "@/components/Layouts/Sidebar";
+import Header from "@/components/Layouts/Header";
+import axiosClient from "../../../../api-client/axios-client";
+import StaticProvider from "@/components/commons/StaticProvider/StaticProvider";
+
+export default function RootLayout({
   children,
-}: Readonly<{ children: ReactNode }>) {
-  const response = await fetch(staticApi).catch((error) => ({} as any));
-  let data: ApiResponse = {
-    channels: [],
-    emailStatus: [],
-    localUserEvents: [],
-    localUserStatus: [],
-    otpFunctions: [],
-    otpTypes: [],
-    roleActives: [],
-    roleStatus: [],
-    roles: [],
-    smsStatus: [],
-    userEvents: [],
-    userStatus: [],
-  };
-  if (response.ok) {
-    data = await response.json();
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const pathname = usePathname();
+
+  console.log("RootLayout");
+
+  if (
+    pathname === "/signIn" ||
+    pathname === "/v1/authentication/authorized_sso"
+  ) {
+    return (
+      <>
+        <SWRConfig
+          value={{
+            fetcher: (url) => axiosClient.get(url),
+            shouldRetryOnError: false,
+          }}
+        >
+          <html lang="en">
+            <body>
+              <main>{children}</main>
+            </body>
+          </html>
+        </SWRConfig>
+      </>
+    );
   }
+
   return (
     <>
-      {/* <!-- ===== Header Start ===== --> */}
       <Header />
-      {/* <!-- ===== Header End ===== --> */}
-      {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex">
-        {/* <!-- ===== Sidebar Start ===== --> */}
         <Sidebar />
-        {/* <!-- ===== Sidebar End ===== --> */}
-        <StaticProvider data={data}>{children}</StaticProvider>
+        <StaticProvider>{children}</StaticProvider>
       </div>
-      {/* <!-- ===== Page Wrapper End ===== --> */}
       <ModalUI />
     </>
   );

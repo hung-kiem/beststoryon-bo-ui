@@ -1,15 +1,10 @@
 "use client";
-import Link from "next/link";
+
 import DarkModeSwitcher from "./DarkModeSwitcher";
-import DropdownMessage from "./DropdownMessage";
-import DropdownNotification from "./DropdownNotification";
-import Image from "next/image";
 import useSidebar from "@hooks/useSidebar";
 import DropdownUser from "./DropdownUser";
 
 const Header = () => {
-  const username = "user";
-  const role = "developer";
   const { isSidebarCollapsed, setIsSidebarCollapsed, setSidebarOpen } =
     useSidebar();
 
@@ -44,17 +39,7 @@ const Header = () => {
 
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
-            {/* <!-- Dark Mode Toggler --> */}
             <DarkModeSwitcher />
-            {/* <!-- Dark Mode Toggler --> */}
-
-            {/* <!-- Notification Menu Area --> */}
-            {/* <DropdownNotification /> */}
-            {/* <!-- Notification Menu Area --> */}
-
-            {/* <!-- Chat Notification Area --> */}
-            {/* <DropdownMessage /> */}
-            {/* <!-- Chat Notification Area --> */}
             <DropdownUser username={"hungnk1"} role={"admin"} />
           </ul>
         </div>

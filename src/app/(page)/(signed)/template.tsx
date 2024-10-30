@@ -1,13 +1,21 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Loader from "@/components/commons/Loader";
+import React from "react";
 import classNames from "classnames";
-import useSidebar from "@hooks/useSidebar";
+import { useBreadCrumb } from "@/components/ui/Breadcrumb/Breadcrumb";
+import Breadcrumb from "@/components/ui/Breadcrumb/BaseBreadcrumb";
 import { useStatic } from "@/components/commons/StaticProvider/StaticProvider";
+import useSidebar from "@hooks/useSidebar";
+import { useSearchFooters, useSearchForm } from "@/components/commons/Form";
+import { useTable } from "@/components/ui/Tables/useTable";
+import Loader from "@/components/commons/Loader";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const { loading } = useStatic();
   const { isSidebarCollapsed } = useSidebar();
+  const { breadCrumbs } = useBreadCrumb();
+  const { searchForms } = useSearchForm();
+  const { buttonsFooter } = useSearchFooters();
+  const { table } = useTable();
 
   return (
     <div
@@ -21,7 +29,31 @@ export default function Template({ children }: { children: React.ReactNode }) {
     >
       <main>
         <div className="mx-auto p-4">
-          {loading ? <Loader partial /> : children}
+          {loading ? (
+            <Loader partial />
+          ) : (
+            <>
+              {breadCrumbs && <Breadcrumb>{breadCrumbs}</Breadcrumb>}
+              <div className="mb-4 flex flex-col gap-4 rounded-lg bg-white p-4 dark:bg-black">
+                {searchForms && (
+                  <div className="grid grow grid-cols-4 gap-4">
+                    {searchForms}
+                  </div>
+                )}
+                <div className="rounded-lg bg-white dark:border-strokedark dark:bg-boxdark">
+                  {buttonsFooter && (
+                    <div className="flex flex-wrap justify-center gap-5">
+                      {buttonsFooter}
+                    </div>
+                  )}
+                </div>
+                {children}
+              </div>
+              {table && (
+                <div className="overflow-hidden rounded-xl">{table}</div>
+              )}
+            </>
+          )}
         </div>
       </main>
     </div>

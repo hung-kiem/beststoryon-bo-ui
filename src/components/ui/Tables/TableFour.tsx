@@ -1,5 +1,5 @@
 "use client";
-import { BRAND } from "@/types/brand";
+import { BRAND } from "@/types/category";
 import Image from "next/image";
 import DropdownDefault from "@/components/ui/Dropdowns/DropdownDefault";
 
