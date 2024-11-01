@@ -1,9 +1,7 @@
 import { Category } from "@/types/category";
 import * as React from "react";
 import { TableColumn } from "react-data-table-component";
-import { HiDotsVertical, HiEye, HiPencilAlt } from "react-icons/hi";
-import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { HiEye, HiPencilAlt } from "react-icons/hi";
 import TableThree from "@/components/ui/Tables/TableThree";
 
 export interface ITableCategoryProps {
@@ -62,68 +60,10 @@ export function TableCategory({
           >
             <HiPencilAlt className="h-4 w-4" />
           </button>
-          <Menu as="div" className="relative inline-block text-left">
-            <div>
-              <Menu.Button className="border-gray-100 bg-gray-200 text-gray-700 hover:bg-gray-300 inline-flex w-full justify-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none">
-                <HiDotsVertical className="h-5 w-5" />
-              </Menu.Button>
-            </div>
-
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="py-1">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => handleViewDetails(row.catId)}
-                        className={`${
-                          active ? "bg-gray-100" : ""
-                        } text-gray-700 block w-full px-4 py-2 text-left text-sm`}
-                      >
-                        Xem chi tiết
-                      </button>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => handleEdit(row.catId)}
-                        className={`${
-                          active ? "bg-gray-100" : ""
-                        } text-gray-700 block w-full px-4 py-2 text-left text-sm`}
-                      >
-                        Chỉnh sửa
-                      </button>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => handleChangeStatus(row.catId)}
-                        className={`${
-                          active ? "bg-gray-100" : ""
-                        } text-gray-700 block w-full px-4 py-2 text-left text-sm`}
-                      >
-                        Đổi trạng thái
-                      </button>
-                    )}
-                  </Menu.Item>
-                </div>
-              </Menu.Items>
-            </Transition>
-          </Menu>
         </div>
       ),
-      width: "200px",
-      center: true,
+      width: "150px",
+      style: { textAlign: "center" },
     },
   ];
 
@@ -135,20 +75,16 @@ export function TableCategory({
     console.log("Chỉnh sửa:", id);
   };
 
-  const handleChangeStatus = (id: number) => {
-    console.log("Đổi trạng thái:", id);
-  };
-
   return (
     <React.Fragment>
-      <TableThree
+      <TableThree<Category>
         columns={columns}
         data={data}
         loading={loading}
         totalCount={totalCount}
         pageSize={pageSize}
-        onPageChange={onChangePage}
-        onPageSizeChange={onChangeRowsPerPage}
+        onPageChange={(page) => onChangePage(page)}
+        onPageSizeChange={(newPageSize) => onChangeRowsPerPage(newPageSize)}
       />
     </React.Fragment>
   );

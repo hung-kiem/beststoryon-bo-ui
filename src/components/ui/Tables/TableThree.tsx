@@ -1,20 +1,20 @@
 "use client";
 import Loader from "@/components/commons/Loader";
-import React from "react";
+import React, { useCallback } from "react";
 import DataTable, {
   TableColumn,
   createTheme,
 } from "react-data-table-component";
 import useTheme from "@hooks/useTheme";
 
-interface TableProps<T> {
-  data: T[];
+interface TableThreeProps<T> {
   columns: TableColumn<T>[];
-  pageSize: number;
-  loading: Boolean;
+  data: T[];
+  loading: boolean;
   totalCount: number;
-  onPageChange: (pageNo: number) => void;
-  onPageSizeChange: (pageSize: number) => void;
+  pageSize: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (newPageSize: number) => void;
 }
 
 createTheme(
@@ -65,9 +65,7 @@ createTheme(
 
 const customStyles = {
   table: {
-    style: {
-      borderRadius: "0px",
-    },
+    style: { borderRadius: "0px" },
   },
   rows: {
     style: {
@@ -92,50 +90,56 @@ const customStyles = {
   },
 };
 
-const TableThree = <T extends object>({
-  data,
+function TableThree<T>({
   columns,
-  pageSize,
+  data,
   loading,
   totalCount,
+  pageSize,
   onPageChange,
   onPageSizeChange,
-}: TableProps<T>) => {
+}: TableThreeProps<T>) {
   const isDarkMode = useTheme("dark");
 
-  const handlePageChange = (page: number) => {
-    onPageChange(page);
-  };
+  const handlePageChange = useCallback(
+    (page: number) => {
+      console.log("new page: ", page);
+      onPageChange(page);
+    },
+    [onPageChange]
+  );
 
-  const handleRowsPerPageChange = (newPageSize: number) => {
-    onPageSizeChange(newPageSize);
-  };
+  const handleRowsPerPageChange = useCallback(
+    (newPageSize: number) => {
+      console.log("new page size: ", newPageSize);
+      onPageSizeChange(newPageSize);
+    },
+    [onPageSizeChange]
+  );
 
   return (
     <div className="overflow-hidden rounded-lg">
       {loading ? (
-        <>
+        <div className="flex justify-center items-center h-full">
           <Loader />
-        </>
+        </div>
       ) : (
-        <>
-          <DataTable
-            columns={columns}
-            data={data}
-            paginationTotalRows={totalCount}
-            customStyles={customStyles}
-            theme={isDarkMode ? "solarized" : "lightmode"}
-            pagination
-            paginationPerPage={pageSize}
-            paginationRowsPerPageOptions={[10, 20, 40, 60, 80, 100]}
-            onChangePage={handlePageChange}
-            onChangeRowsPerPage={handleRowsPerPageChange}
-            className="!rounded-none"
-          />
-        </>
+        <DataTable
+          columns={columns}
+          data={data}
+          paginationTotalRows={totalCount}
+          customStyles={customStyles}
+          theme={isDarkMode ? "solarized" : "lightmode"}
+          pagination
+          paginationPerPage={pageSize}
+          paginationRowsPerPageOptions={[1, 2]}
+          onChangePage={handlePageChange}
+          onChangeRowsPerPage={handleRowsPerPageChange}
+          className="!rounded-none"
+        />
       )}
     </div>
   );
-};
+}
 
 export default TableThree;

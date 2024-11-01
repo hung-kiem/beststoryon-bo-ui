@@ -1,13 +1,15 @@
 import { forwardRef } from "react";
+import classNames from "classnames";
 
 interface InputProps {
   label: string;
   layout?: "vertical" | "horizontal";
   placeholder?: string;
   className?: string;
-  type?: "text" | "number" | "email" | "tel" | "password";
-  defaultValue?: string;
+  type?: "text" | "number" | "email" | "tel";
+  value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  readonly?: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -18,8 +20,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       placeholder = "Nhập thông tin",
       className = "",
       type = "text",
-      defaultValue = "",
-      onChange = () => {},
+      value,
+      onChange,
+      readonly = false,
+      ...rest
     },
     ref
   ) => {
@@ -31,14 +35,16 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div
-        className={`h-fit ${
+        className={classNames(
+          "h-fit",
           layout === "vertical"
             ? "grid grid-cols-1"
             : "grid grid-cols-12 items-center gap-2"
-        }`}
+        )}
       >
         {label && (
           <label
+            htmlFor={inputId}
             className={`${
               layout === "horizontal" ? "col-span-4" : ""
             } ${labelClasses}`}
@@ -52,11 +58,15 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           type={type}
           name={label}
           placeholder={placeholder}
-          defaultValue={defaultValue}
-          className={`${
-            layout === "horizontal" ? "col-span-8" : ""
-          } ${inputClasses} ${className}`}
+          value={value}
+          className={classNames(
+            layout === "horizontal" ? "col-span-8" : "",
+            inputClasses,
+            className
+          )}
           onChange={onChange}
+          readOnly={readonly}
+          {...rest}
         />
       </div>
     );
