@@ -34,16 +34,26 @@ export const FooterButton = ({
   children,
   type = "primary",
   size = "medium",
+  isDisabled = false,
+  isLoading = false,
   onClick = () => {},
 }: {
   children: ReactNode;
   className?: string;
   type?: "primary" | "secondary" | "black" | "outline";
   size?: "small" | "medium" | "large";
+  isDisabled?: boolean;
+  isLoading?: boolean;
   onClick?: () => void;
 }) => {
   return (
-    <Button type={type} size={size} onClick={onClick}>
+    <Button
+      type={type}
+      size={size}
+      onClick={onClick}
+      isDisabled={isDisabled}
+      isLoading={isLoading}
+    >
       {children}
     </Button>
   );

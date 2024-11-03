@@ -1,15 +1,16 @@
-import { Category } from "@/types/category";
+import { CategoryItem } from "@/types/category";
 import * as React from "react";
 import { TableColumn } from "react-data-table-component";
 import { HiEye, HiPencilAlt } from "react-icons/hi";
 import TableThree from "@/components/ui/Tables/TableThree";
+import { useRouter } from "next/navigation";
 
 export interface ITableCategoryProps {
   currentPage: number;
   pageSize: number;
   totalCount: number;
   loading: boolean;
-  data: Category[];
+  data: CategoryItem[];
   onChangePage: (page: number) => void;
   onChangeRowsPerPage: (newPageSize: number) => void;
 }
@@ -23,28 +24,29 @@ export function TableCategory({
   onChangePage,
   onChangeRowsPerPage,
 }: ITableCategoryProps) {
-  const columns: TableColumn<Category>[] = [
+  const router = useRouter();
+  const columns: TableColumn<CategoryItem>[] = [
     {
       name: "STT",
-      cell: (row: Category, index: number) =>
+      cell: (row: CategoryItem, index: number) =>
         (currentPage - 1) * pageSize + index + 1,
       width: "60px",
     },
     {
       name: "Mã code",
-      selector: (row: Category) => row.catCode,
+      selector: (row: CategoryItem) => row.catCode,
     },
     {
       name: "Tên",
-      selector: (row: Category) => row.catName,
+      selector: (row: CategoryItem) => row.catName,
     },
     {
       name: "Thứ tự",
-      selector: (row: Category) => row.displayOrder,
+      selector: (row: CategoryItem) => row.displayOrder,
     },
     {
       name: "Chức năng",
-      cell: (row: Category) => (
+      cell: (row: CategoryItem) => (
         <div className="border-gray-5 alight-center flex w-full justify-center gap-2 border-l-2 pl-2">
           <button
             onClick={() => handleViewDetails(row.catId)}
@@ -67,24 +69,25 @@ export function TableCategory({
     },
   ];
 
-  const handleViewDetails = (id: number) => {
-    console.log("Xem chi tiết:", id);
+  const handleViewDetails = (id: string) => {
+    router.push(`/category/${id}`);
   };
 
-  const handleEdit = (id: number) => {
+  const handleEdit = (id: string) => {
     console.log("Chỉnh sửa:", id);
   };
 
   return (
     <React.Fragment>
-      <TableThree<Category>
+      <TableThree
         columns={columns}
         data={data}
         loading={loading}
         totalCount={totalCount}
+        currentPage={currentPage}
         pageSize={pageSize}
-        onPageChange={(page) => onChangePage(page)}
-        onPageSizeChange={(newPageSize) => onChangeRowsPerPage(newPageSize)}
+        onPageChange={onChangePage}
+        onPageSizeChange={onChangeRowsPerPage}
       />
     </React.Fragment>
   );

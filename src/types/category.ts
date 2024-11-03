@@ -8,15 +8,15 @@ export interface SearchCategoryRequest {
 }
 
 export interface SearchCategoryResponse extends BaseResponse {
-  data: Category[];
+  data: CategoryItem[];
   totalRecord: number;
   totalPage: number;
   pageIndex: number;
   pageSize: number;
 }
 
-export interface Category {
-  catId: number;
+export interface CategoryItem {
+  catId: string;
   catCode: string;
   catName: string;
   displayOrder: number;
@@ -26,4 +26,16 @@ export interface Category {
   createdBy: string;
   modifiedDate: string | null;
   modifiedBy: string | null;
+}
+
+export interface SearchCategoryDetailResponse extends BaseResponse {
+  data: CategoryItem;
+}
+
+export interface CreateCategoryRequest {
+  catCode: string;
+  cateName: string;
+  status: string;
+  displayOrder: number;
+  originSite: string;
 }

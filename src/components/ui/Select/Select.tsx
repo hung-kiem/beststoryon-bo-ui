@@ -15,6 +15,7 @@ interface SelectProps {
   title: string;
   onSelect?: (value: string) => void;
   isLive?: boolean;
+  isDisabled?: boolean;
 }
 
 const Select = ({
@@ -24,6 +25,7 @@ const Select = ({
   title = "Chọn",
   onSelect,
   isLive = false,
+  isDisabled = false,
 }: SelectProps) => {
   const [value, setValue] = useState<string>(propValue);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -55,8 +57,12 @@ const Select = ({
           <div
             className={`relative h-[42px] w-full cursor-pointer appearance-none rounded-lg border border-stroke bg-transparent px-4 py-2 outline-none ${
               value ? "text-black dark:text-white" : ""
+            } ${
+              isDisabled
+                ? "cursor-not-allowed bg-gray-200 dark:bg-gray-700"
+                : ""
             } text-sm`}
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            onClick={() => !isDisabled && setIsDropdownOpen(!isDropdownOpen)}
           >
             {value ? (
               options.find((option) => option.value === value)?.label
@@ -68,8 +74,13 @@ const Select = ({
             <div className="absolute right-4 top-1/2 z-30 flex w-8 -translate-y-1/2 items-center py-1 pl-1 pr-1">
               <button
                 type="button"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="h-6 w-6 cursor-pointer outline-none focus:outline-none"
+                onClick={() =>
+                  !isDisabled && setIsDropdownOpen(!isDropdownOpen)
+                }
+                className={`h-6 w-6 outline-none focus:outline-none ${
+                  isDisabled ? "cursor-not-allowed" : "cursor-pointer"
+                }`}
+                disabled={isDisabled}
               >
                 <svg
                   width="24"
@@ -91,7 +102,7 @@ const Select = ({
             </div>
           </div>
 
-          {isDropdownOpen && (
+          {isDropdownOpen && !isDisabled && (
             <div className="absolute left-0 right-0 top-full z-50 mt-2 rounded-lg border border-stroke bg-white shadow-lg dark:border-form-strokedark dark:bg-form-input">
               {isLive && (
                 <input
@@ -100,6 +111,7 @@ const Select = ({
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="h-[42px] w-full border-b border-stroke px-4 py-2 text-sm dark:border-form-strokedark dark:bg-form-input dark:text-white"
+                  disabled={isDisabled}
                 />
               )}
 
@@ -108,8 +120,12 @@ const Select = ({
                   filteredOptions.map((option) => (
                     <li
                       key={option.value}
-                      onClick={() => handleSelectOption(option.value)}
-                      className="hover:bg-gray-100 dark:hover:bg-dark-hover cursor-pointer px-4 py-2 text-sm"
+                      onClick={() =>
+                        !isDisabled && handleSelectOption(option.value)
+                      }
+                      className={`hover:bg-gray-100 dark:hover:bg-dark-hover cursor-pointer px-4 py-2 text-sm ${
+                        isDisabled ? "cursor-not-allowed" : ""
+                      }`}
                     >
                       {option.label}
                     </li>

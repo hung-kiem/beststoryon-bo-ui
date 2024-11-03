@@ -22,9 +22,9 @@ async function handleRequest(req: NextRequest, method: "GET" | "POST") {
     const headers: { "Content-Type": string; Authorization?: string } = {
       "Content-Type": "application/json",
     };
-    if (accessToken) {
-      headers["Authorization"] = `Bearer ${accessToken.value}`;
-    }
+    // if (accessToken) {
+    //   headers["Authorization"] = `Bearer ${accessToken.value}`;
+    // }
 
     const urlBase = `${process.env.CORE_API}${req.nextUrl.pathname.replace(
       `/api`,
@@ -39,21 +39,40 @@ async function handleRequest(req: NextRequest, method: "GET" | "POST") {
     };
 
     if (method === "POST") {
-      const body = await req.json();
-      fetchOptions.body = JSON.stringify(body);
+      try {
+        const body = await req.json();
+        console.log("********************* req.body: ", body);
+        fetchOptions.body = JSON.stringify(body);
+      } catch (error) {
+        console.error("Error parsing JSON body:", error);
+      }
     }
 
     const response = await fetch(url, fetchOptions);
     console.log("********************* response: ", response);
 
-    const data = await response.json();
-    return NextResponse.json(data, { status: response.status });
+    let nextResponse;
+    if (req.url.includes("/export")) {
+      const arrayBuffer = await response.arrayBuffer();
+      nextResponse = new NextResponse(arrayBuffer, {
+        status: 200,
+        headers: {
+          "Content-Type":
+            response.headers.get("Content-Type") || "application/octet-stream",
+          "Content-Disposition":
+            response.headers.get("Content-Disposition") || "",
+        },
+      });
+    } else {
+      const data = await response.json();
+      nextResponse = NextResponse.json(data, { status: response.status });
+    }
 
     // if (response.ok) {
     //   extendTokenExpiry(nextResponse, accessToken.value);
     // }
 
-    // return nextResponse;
+    return nextResponse;
   } catch (error) {
     console.error("********************* ERROR: ", error);
     return NextResponse.json(
