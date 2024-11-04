@@ -3,6 +3,7 @@ import {
   SearchCategoryDetailResponse,
   SearchCategoryRequest,
   SearchCategoryResponse,
+  UpdateCategoryRequest,
 } from "@/types/category";
 import axiosClient from "./axios-client";
 import { create } from "domain";
@@ -32,6 +33,21 @@ export const categoryApi = {
   create: async (payload: CreateCategoryRequest): Promise<BaseResponse> => {
     try {
       const response = await axiosClient.post("/admin/cat/add", payload);
+      return response.data;
+    } catch (error) {
+      console.error("Login error:", error);
+      throw error;
+    }
+  },
+  edit: async (
+    id: string,
+    payload: UpdateCategoryRequest
+  ): Promise<BaseResponse> => {
+    try {
+      const response = await axiosClient.post(
+        `/admin/cat/updateById/${id}`,
+        payload
+      );
       return response.data;
     } catch (error) {
       console.error("Login error:", error);

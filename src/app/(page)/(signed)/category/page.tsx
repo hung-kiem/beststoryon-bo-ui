@@ -38,11 +38,11 @@ const statusOptions = [
 const Category = () => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   const [results, setResults] = useState<CategoryItem[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setLoading] = useState(false);
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit, setValue, watch } = useForm<FormData>({
     defaultValues: initValues,
   });
 
@@ -54,14 +54,12 @@ const Category = () => {
         pageIndex: pageNo,
         pageSize,
       };
-      console.log("payload", payload);
 
       try {
         setLoading(true);
         const response: SearchCategoryResponse = await categoryApi.search(
           payload
         );
-        console.log("response", response);
         setResults(response.data);
         setTotalCount(response.totalRecord);
       } catch (error) {
@@ -101,14 +99,15 @@ const Category = () => {
         <Controller
           name="categoryName"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Input
               label="Tên danh mục"
               layout="vertical"
               className="w-full"
               type="text"
               placeholder="Nhập tên danh mục"
-              {...field}
+              value={watch("categoryName")}
+              onChange={(e) => setValue("categoryName", e.target.value)}
             />
           )}
         />

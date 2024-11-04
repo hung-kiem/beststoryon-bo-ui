@@ -11,7 +11,6 @@ import Input from "@/components/ui/Input/Input";
 import Select from "@/components/ui/Select/Select";
 
 const fetcher = async (id: string) => {
-  console.log("Fetching detail for ID:", id);
   const response = await categoryApi.getDetail(id);
   return response;
 };

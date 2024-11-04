@@ -74,7 +74,7 @@ export function TableCategory({
   };
 
   const handleEdit = (id: string) => {
-    console.log("Chỉnh sửa:", id);
+    router.push(`/category/edit/${id}`);
   };
 
   return (

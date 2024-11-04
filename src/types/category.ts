@@ -39,3 +39,12 @@ export interface CreateCategoryRequest {
   displayOrder: number;
   originSite: string;
 }
+
+export interface UpdateCategoryRequest {
+  catId: string;
+  catCode: string;
+  catName: string;
+  status: string;
+  displayOrder: number;
+  originSite: string;
+}
