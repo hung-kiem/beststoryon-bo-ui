@@ -54,4 +54,15 @@ export const categoryApi = {
       throw error;
     }
   },
+  getAll: async (
+    payload: SearchCategoryRequest
+  ): Promise<SearchCategoryResponse> => {
+    try {
+      const response = await axiosClient.post("/admin/cat/getAll");
+      return response.data;
+    } catch (error) {
+      console.error("Login error:", error);
+      throw error;
+    }
+  },
 };

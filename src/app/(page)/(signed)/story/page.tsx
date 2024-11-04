@@ -1,33 +1,37 @@
 "use client";
 
-import BreadcrumbItem from "@/components/ui/Breadcrumb/BreadcrumbItem";
-import { useCallback, useEffect, useState } from "react";
+import {
+  SearchStoryRequest,
+  SearchStoryResponse,
+  StoryData,
+} from "@/types/story";
+import { useRouter } from "next/navigation";
+import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { TableCategory } from "./TableCategory";
+import { storyApi } from "../../../../../api-client/story-api";
+import BreadCrumb from "@/components/ui/Breadcrumb/Breadcrumb";
+import BreadcrumbItem from "@/components/ui/Breadcrumb/BreadcrumbItem";
 import SearchForm from "@/components/commons/Form/SearchForm";
+import Input from "@/components/ui/Input/Input";
+import Select from "@/components/ui/Select/Select";
 import Footer, {
   FooterButton,
   FooterButtons,
 } from "@/components/commons/Form/SearchFooter";
 import TableList from "@/components/ui/Tables/useTable";
-import {
-  CategoryItem,
-  SearchCategoryRequest,
-  SearchCategoryResponse,
-} from "@/types/category";
-import { categoryApi } from "../../../../../api-client/category-api";
-import Input from "@/components/ui/Input/Input";
-import Select from "@/components/ui/Select/Select";
-import BreadCrumb from "@/components/ui/Breadcrumb/Breadcrumb";
-import { useRouter } from "next/navigation";
+import { TableStory } from "./TableStory";
+import SelectCategory from "../(component)/SelectCategory";
+
 interface FormData {
+  catId: string;
   status: string;
-  categoryName: string;
+  storyName: string;
 }
 
 const initValues: FormData = {
   status: "1",
-  categoryName: "",
+  storyName: "",
+  catId: "",
 };
 
 const statusOptions = [
@@ -35,11 +39,11 @@ const statusOptions = [
   { label: "Không hoạt động", value: "0" },
 ];
 
-const Category = () => {
+const StoryList = () => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
-  const [results, setResults] = useState<CategoryItem[]>([]);
+  const [results, setResults] = useState<StoryData[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setLoading] = useState(false);
   const { control, handleSubmit, setValue, watch } = useForm<FormData>({
@@ -48,8 +52,9 @@ const Category = () => {
 
   const fetchData = useCallback(
     async (formData: FormData, pageNo: number, pageSize: number) => {
-      const payload: SearchCategoryRequest = {
-        catName: formData.categoryName,
+      const payload: SearchStoryRequest = {
+        catId: formData.catId,
+        storyName: formData.storyName,
         status: formData.status,
         pageIndex: pageNo,
         pageSize,
@@ -57,9 +62,7 @@ const Category = () => {
 
       try {
         setLoading(true);
-        const response: SearchCategoryResponse = await categoryApi.search(
-          payload
-        );
+        const response: SearchStoryResponse = await storyApi.search(payload);
         setResults(response.data);
         setTotalCount(response.totalRecord);
       } catch (error) {
@@ -90,6 +93,10 @@ const Category = () => {
     handleSubmit((data) => fetchData(data, 1, newPageSize))();
   };
 
+  const handleCrawlData = () => {
+    console.log("Crawl data");
+  };
+
   return (
     <>
       <BreadCrumb>
@@ -97,17 +104,27 @@ const Category = () => {
       </BreadCrumb>
       <SearchForm>
         <Controller
-          name="categoryName"
+          name="catId"
+          control={control}
+          render={({ field }) => (
+            <SelectCategory
+              onChange={field.onChange}
+              defaultValue={field.value}
+            />
+          )}
+        />
+        <Controller
+          name="storyName"
           control={control}
           render={() => (
             <Input
-              label="Tên danh mục"
+              label="Tên truyện"
               layout="vertical"
               className="w-full"
               type="text"
-              placeholder="Nhập tên danh mục"
-              value={watch("categoryName")}
-              onChange={(e) => setValue("categoryName", e.target.value)}
+              placeholder="Nhập tên truyện"
+              value={watch("storyName")}
+              onChange={(e) => setValue("storyName", e.target.value)}
             />
           )}
         />
@@ -130,16 +147,13 @@ const Category = () => {
           <FooterButton type="primary" onClick={handleSubmit(onSubmit)}>
             Tìm kiếm
           </FooterButton>
-          <FooterButton
-            type="primary"
-            onClick={() => router.push("/category/create")}
-          >
-            Thêm mới
+          <FooterButton type="primary" onClick={handleCrawlData}>
+            Crawl data
           </FooterButton>
         </FooterButtons>
       </Footer>
       <TableList>
-        <TableCategory
+        <TableStory
           currentPage={currentPage}
           loading={isLoading}
           pageSize={pageSize}
@@ -153,4 +167,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default StoryList;

@@ -13,7 +13,7 @@ import { BaseResponse } from "@/types/baseResponse";
 import { CreateCategoryRequest } from "@/types/category";
 import React, { useCallback } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { categoryApi } from "../../../../../../api-client/category";
+import { categoryApi } from "../../../../../../api-client/category-api";
 import { useRouter } from "next/navigation";
 
 interface FormData {

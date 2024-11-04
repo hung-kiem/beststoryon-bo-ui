@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { categoryApi } from "../../../../../../api-client/category";
+import { categoryApi } from "../../../../../../api-client/category-api";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
 import Loader from "@/components/commons/Loader";

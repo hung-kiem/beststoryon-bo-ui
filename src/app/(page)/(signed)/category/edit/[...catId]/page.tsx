@@ -7,7 +7,7 @@ import Select from "@/components/ui/Select/Select";
 import { useParams, useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
-import { categoryApi } from "../../../../../../../api-client/category";
+import { categoryApi } from "../../../../../../../api-client/category-api";
 import Loader from "@/components/commons/Loader";
 import { Controller, useForm } from "react-hook-form";
 import Footer, {
