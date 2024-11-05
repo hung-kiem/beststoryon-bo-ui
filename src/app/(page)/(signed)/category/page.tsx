@@ -93,7 +93,7 @@ const Category = () => {
   return (
     <>
       <BreadCrumb>
-        <BreadcrumbItem pageName="Category" path="/category" />
+        <BreadcrumbItem pageName="Danh sách danh mục" path="/category" />
       </BreadCrumb>
       <SearchForm>
         <Controller

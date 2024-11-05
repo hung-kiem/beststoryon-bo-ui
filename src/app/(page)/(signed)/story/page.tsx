@@ -53,7 +53,7 @@ const StoryList = () => {
   const fetchData = useCallback(
     async (formData: FormData, pageNo: number, pageSize: number) => {
       const payload: SearchStoryRequest = {
-        catId: formData.catId,
+        catId: formData.catId === "" ? "0" : formData.catId,
         storyName: formData.storyName,
         status: formData.status,
         pageIndex: pageNo,
@@ -93,14 +93,10 @@ const StoryList = () => {
     handleSubmit((data) => fetchData(data, 1, newPageSize))();
   };
 
-  const handleCrawlData = () => {
-    console.log("Crawl data");
-  };
-
   return (
     <>
       <BreadCrumb>
-        <BreadcrumbItem pageName="Category" path="/category" />
+        <BreadcrumbItem pageName="Danh sách truyện" path="#" />
       </BreadCrumb>
       <SearchForm>
         <Controller
@@ -146,9 +142,6 @@ const StoryList = () => {
         <FooterButtons>
           <FooterButton type="primary" onClick={handleSubmit(onSubmit)}>
             Tìm kiếm
-          </FooterButton>
-          <FooterButton type="primary" onClick={handleCrawlData}>
-            Crawl data
           </FooterButton>
         </FooterButtons>
       </Footer>

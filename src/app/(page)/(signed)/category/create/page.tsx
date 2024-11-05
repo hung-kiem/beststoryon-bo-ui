@@ -72,6 +72,10 @@ const CreateCategory = () => {
   return (
     <>
       <BreadCrumb>
+        <BreadcrumbItem
+          pageName="Danh sách danh mục"
+          path="/category"
+        ></BreadcrumbItem>
         <BreadcrumbItem pageName="Thêm mới danh mục" path="#" />
       </BreadCrumb>
       <SearchForm>

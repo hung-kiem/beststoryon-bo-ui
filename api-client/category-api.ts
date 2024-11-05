@@ -58,7 +58,7 @@ export const categoryApi = {
     payload: SearchCategoryRequest
   ): Promise<SearchCategoryResponse> => {
     try {
-      const response = await axiosClient.post("/admin/cat/getAll");
+      const response = await axiosClient.post("/admin/cat/getAll", payload);
       return response.data;
     } catch (error) {
       console.error("Login error:", error);

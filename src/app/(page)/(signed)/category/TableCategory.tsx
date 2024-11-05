@@ -33,15 +33,15 @@ export function TableCategory({
       width: "60px",
     },
     {
-      name: "Mã code",
+      name: "Mã danh mục",
       selector: (row: CategoryItem) => row.catCode,
     },
     {
-      name: "Tên",
+      name: "Tên danh mục",
       selector: (row: CategoryItem) => row.catName,
     },
     {
-      name: "Thứ tự",
+      name: "Thứ tự hiển thị",
       selector: (row: CategoryItem) => row.displayOrder,
     },
     {

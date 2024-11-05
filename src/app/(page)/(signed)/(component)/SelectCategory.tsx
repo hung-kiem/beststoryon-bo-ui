@@ -31,6 +31,7 @@ const SelectCategory: React.FC<SelectCategoryProps> = ({
       revalidateOnFocus: false,
     }
   );
+  console.log("apps", apps);
   const [catOptions, setCatOptions] = useState<Option[]>([]);
 
   useEffect(() => {

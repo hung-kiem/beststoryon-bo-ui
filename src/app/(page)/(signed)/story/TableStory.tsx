@@ -33,11 +33,7 @@ export function TableStory({
       width: "60px",
     },
     {
-      name: "Mã truyện",
-      selector: (row: StoryData) => row.storyId,
-    },
-    {
-      name: "Tên",
+      name: "Tên truyện",
       selector: (row: StoryData) => row.storyName,
     },
     {
@@ -45,7 +41,7 @@ export function TableStory({
       selector: (row: StoryData) => row.storyAuthor,
     },
     {
-      name: "Thứ tự",
+      name: "Thứ tự hiển thị",
       selector: (row: StoryData) => row.displayOrder,
     },
     {
@@ -79,6 +75,7 @@ export function TableStory({
 
   const handleViewDetails = (id: string) => {
     console.log("handleViewDetails", id);
+    router.push(`/story/${id}`);
   };
 
   const handleEdit = (id: string) => {

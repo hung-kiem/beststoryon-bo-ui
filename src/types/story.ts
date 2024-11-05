@@ -47,3 +47,34 @@ export interface StoryData {
   storyNameAlias: string | null;
   catName: string | null;
 }
+
+export interface StoryDetailResponse {
+  storyId: number;
+  storyName: string;
+  storySummary: string;
+  storyAuthor: string | null;
+  chapterNumber: number;
+  status: string;
+  storyStatus: string;
+  urlAvatar: string;
+  urlOriginCrawl: string;
+  createdDate: string;
+  createdBy: string;
+  modifiedDate: string | null;
+  modifiedBy: string | null;
+  tagCodeRef: string;
+  catCodeRef: string;
+  urlCode: string;
+  viewNumber: number;
+  published: string;
+  publishedDate: string;
+  metaTitle: string | null;
+  metaDescription: string | null;
+  metaKeyword: string | null;
+  displayOrder: number;
+  likeCount: number | null;
+  isHot: string;
+  isTopFocus: string;
+  storyNameAlias: string | null;
+  storyCatMap: Array<Object>;
+}

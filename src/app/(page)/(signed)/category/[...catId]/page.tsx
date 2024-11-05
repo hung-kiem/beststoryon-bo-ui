@@ -42,8 +42,11 @@ const CategoryDetail = () => {
   return (
     <>
       <BreadCrumb>
-        <BreadcrumbItem pageName="Tìm kiếm" path="/category"></BreadcrumbItem>
-        <BreadcrumbItem pageName="Chi tiết tìm kiếm" path="#"></BreadcrumbItem>
+        <BreadcrumbItem
+          pageName="Danh sách danh mục"
+          path="/category"
+        ></BreadcrumbItem>
+        <BreadcrumbItem pageName="Chi tiết danh mục" path="#"></BreadcrumbItem>
       </BreadCrumb>
       <div className="grid grow grid-cols-3 gap-4">
         <Input

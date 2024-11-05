@@ -113,8 +113,11 @@ const EditCategory = () => {
   return (
     <>
       <BreadCrumb>
-        <BreadcrumbItem pageName="Tìm kiếm" path="/category"></BreadcrumbItem>
-        <BreadcrumbItem pageName="Chi tiết tìm kiếm" path="#"></BreadcrumbItem>
+        <BreadcrumbItem
+          pageName="Danh sách danh mục"
+          path="/category"
+        ></BreadcrumbItem>
+        <BreadcrumbItem pageName="Chỉnh sửa danh mục" path="#"></BreadcrumbItem>
       </BreadCrumb>
       <SearchForm>
         <Controller
