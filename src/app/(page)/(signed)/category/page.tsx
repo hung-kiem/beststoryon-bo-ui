@@ -79,6 +79,21 @@ const Category = () => {
     fetchData(data, 1, pageSize);
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleSubmit(onSubmit)();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleSubmit, onSubmit]);
+
   const handleOnChangePage = (page: number) => {
     setCurrentPage(page);
     handleSubmit((data) => fetchData(data, page, pageSize))();
@@ -127,11 +142,15 @@ const Category = () => {
       </SearchForm>
       <Footer>
         <FooterButtons>
-          <FooterButton type="primary" onClick={handleSubmit(onSubmit)}>
+          <FooterButton
+            type="primary"
+            onClick={handleSubmit(onSubmit)}
+            isLoading={isLoading}
+          >
             Tìm kiếm
           </FooterButton>
           <FooterButton
-            type="primary"
+            type="secondary"
             onClick={() => router.push("/category/create")}
           >
             Thêm mới

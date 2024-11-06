@@ -51,22 +51,9 @@ async function handleRequest(req: NextRequest, method: "GET" | "POST") {
     const response = await fetch(url, fetchOptions);
     console.log("********************* response: ", response);
 
-    let nextResponse;
-    if (req.url.includes("/export")) {
-      const arrayBuffer = await response.arrayBuffer();
-      nextResponse = new NextResponse(arrayBuffer, {
-        status: 200,
-        headers: {
-          "Content-Type":
-            response.headers.get("Content-Type") || "application/octet-stream",
-          "Content-Disposition":
-            response.headers.get("Content-Disposition") || "",
-        },
-      });
-    } else {
-      const data = await response.json();
-      nextResponse = NextResponse.json(data, { status: response.status });
-    }
+    const data = await response.json();
+    console.log("********************* data: ", data);
+    const nextResponse = NextResponse.json(data, { status: response.status });
 
     // if (response.ok) {
     //   extendTokenExpiry(nextResponse, accessToken.value);

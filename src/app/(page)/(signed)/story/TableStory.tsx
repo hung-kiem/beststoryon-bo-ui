@@ -46,7 +46,16 @@ export function TableStory({
     },
     {
       name: "Trạng thái",
-      selector: (row: StoryData) => row.status,
+      selector: (row: StoryData) =>
+        row.status === "1" ? "Hoạt động" : "Không hoạt động",
+    },
+    {
+      name: "Truyện nổi bật",
+      selector: (row: StoryData) => (row.isHot === "1" ? "Có" : "Không"),
+    },
+    {
+      name: "Truyện ưu tiên",
+      selector: (row: StoryData) => (row.isTopFocus === "1" ? "Có" : "Không"),
     },
     {
       name: "Chức năng",
@@ -80,6 +89,7 @@ export function TableStory({
 
   const handleEdit = (id: string) => {
     console.log("handleEdit", id);
+    router.push(`/story/edit/${id}`);
   };
 
   return (

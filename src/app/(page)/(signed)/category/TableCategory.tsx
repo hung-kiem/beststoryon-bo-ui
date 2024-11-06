@@ -43,6 +43,16 @@ export function TableCategory({
     {
       name: "Thứ tự hiển thị",
       selector: (row: CategoryItem) => row.displayOrder,
+      style: { textAlign: "center" },
+    },
+    {
+      name: "Trạng thái",
+      selector: (row: CategoryItem) =>
+        row.status === "1" ? "Hoạt động" : "Không hoạt động",
+    },
+    {
+      name: "Nguồn",
+      selector: (row: CategoryItem) => row.originSite,
     },
     {
       name: "Chức năng",

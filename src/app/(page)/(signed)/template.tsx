@@ -28,7 +28,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
       )}
     >
       <main>
-        <div className="mx-auto p-4">
+        <div
+          className={`relative mx-auto max-w-[calc(100vw-10rem)]  p-4 transition-all duration-300`}
+        >
           {loading ? (
             <Loader partial />
           ) : (

@@ -76,5 +76,23 @@ export interface StoryDetailResponse {
   isHot: string;
   isTopFocus: string;
   storyNameAlias: string | null;
-  storyCatMap: Array<Object>;
+  storyCatMap: StoryCategoryMap[];
+}
+
+export interface StoryCategoryMap {
+  scMapId: number;
+  storyId: number;
+  catId: number;
+  status: string;
+  createdDate: string;
+  createdBy: string;
+  modifiedDate: string | null;
+  modifieddBy: string | null;
+}
+
+export interface UpdateStoryRequest {
+  storyNameAlias: string;
+  storyAuthor: string;
+  storyName: string;
+  storyStatus: string;
 }

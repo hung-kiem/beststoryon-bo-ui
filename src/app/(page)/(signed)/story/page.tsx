@@ -82,6 +82,21 @@ const StoryList = () => {
     fetchData(data, 1, pageSize);
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleSubmit(onSubmit)();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleSubmit, onSubmit]);
+
   const handleOnChangePage = (page: number) => {
     setCurrentPage(page);
     handleSubmit((data) => fetchData(data, page, pageSize))();
@@ -102,10 +117,10 @@ const StoryList = () => {
         <Controller
           name="catId"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <SelectCategory
-              onChange={field.onChange}
-              defaultValue={field.value}
+              onChange={(value) => setValue("catId", value)}
+              defaultValue={watch("catId")}
             />
           )}
         />
@@ -127,20 +142,24 @@ const StoryList = () => {
         <Controller
           name="status"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Select
               title="Trạng thái"
               label="Trạng thái"
               options={statusOptions}
-              onSelect={(value) => field.onChange(value)}
-              {...field}
+              value={watch("status")}
+              onSelect={(value) => setValue("status", value)}
             />
           )}
         />
       </SearchForm>
       <Footer>
         <FooterButtons>
-          <FooterButton type="primary" onClick={handleSubmit(onSubmit)}>
+          <FooterButton
+            type="primary"
+            onClick={handleSubmit(onSubmit)}
+            isLoading={isLoading}
+          >
             Tìm kiếm
           </FooterButton>
         </FooterButtons>

@@ -32,12 +32,12 @@ const statusOptions = [
 const CreateCategory = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit, setValue, watch } = useForm<FormData>({
     defaultValues: {
       status: "1",
       catName: "",
       catCode: "",
-      displayOrder: 0,
+      displayOrder: 99,
       originSite: "",
     },
   });
@@ -49,7 +49,6 @@ const CreateCategory = () => {
       displayOrder: formData.displayOrder,
       originSite: formData.originSite,
     };
-    console.log("payload", payload);
 
     try {
       setIsLoading(true);
@@ -82,17 +81,16 @@ const CreateCategory = () => {
         <Controller
           name="catCode"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Input
               label="Mã danh mục"
               layout="vertical"
               className="w-full"
               type="text"
               placeholder="Nhập mã danh mục"
-              {...field}
+              value={watch("catCode")}
               onChange={(e) => {
-                field.onChange(e);
-                console.log("catCode changed:", e.target.value);
+                setValue("catCode", e.target.value);
               }}
             />
           )}
@@ -100,17 +98,16 @@ const CreateCategory = () => {
         <Controller
           name="catName"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Input
               label="Tên danh mục"
               layout="vertical"
               className="w-full"
               type="text"
               placeholder="Nhập tên danh mục"
-              {...field}
+              value={watch("catName")}
               onChange={(e) => {
-                field.onChange(e);
-                console.log("catName changed:", e.target.value);
+                setValue("catName", e.target.value);
               }}
             />
           )}
@@ -118,15 +115,14 @@ const CreateCategory = () => {
         <Controller
           name="status"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Select
               title="Trạng thái"
               label="Trạng thái"
               options={statusOptions}
-              {...field}
+              value={watch("status")}
               onSelect={(value) => {
-                field.onChange(value);
-                console.log("status changed:", value);
+                setValue("status", value);
               }}
             />
           )}
@@ -134,17 +130,16 @@ const CreateCategory = () => {
         <Controller
           name="displayOrder"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Input
               label="Thứ tự hiển thị"
               layout="vertical"
               className="w-full"
               type="number"
               placeholder="Nhập thứ tự hiển thị"
-              {...field}
+              value={watch("displayOrder")}
               onChange={(e) => {
-                field.onChange(e);
-                console.log("displayOrder changed:", e.target.value);
+                setValue("displayOrder", Number(e.target.value));
               }}
             />
           )}
@@ -152,17 +147,16 @@ const CreateCategory = () => {
         <Controller
           name="originSite"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Input
               label="Nguồn"
               layout="vertical"
               className="w-full"
               type="text"
               placeholder="Nhập nguồn"
-              {...field}
+              value={watch("originSite")}
               onChange={(e) => {
-                field.onChange(e);
-                console.log("originSite changed:", e.target.value);
+                setValue("originSite", e.target.value);
               }}
             />
           )}

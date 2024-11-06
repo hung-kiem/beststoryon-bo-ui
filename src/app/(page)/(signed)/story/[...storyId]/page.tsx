@@ -9,10 +9,8 @@ import { useParams } from "next/navigation";
 import useSWR from "swr";
 import Loader from "@/components/commons/Loader";
 import Input from "@/components/ui/Input/Input";
-import {
-  convertDateFormat,
-  formatDate,
-} from "../../../../../../utils/dateUtils";
+import { convertDateFormat } from "../../../../../../utils/dateUtils";
+import { Controller } from "react-hook-form";
 
 const fetcher = async (id: string) => {
   const response = await storyApi.getDetail(id);
@@ -49,13 +47,7 @@ const StoryDetailPage = () => {
         <BreadcrumbItem pageName="Danh sách truyện" path="/story" />
         <BreadcrumbItem pageName="Chi tiết truyện" path="#" />
       </BreadCrumb>
-      <div className="grid grow grid-cols-3 gap-4">
-        <Input
-          label="Tên truyện"
-          value={detail.storyName || ""}
-          isReadOnly
-          placeholder=""
-        />
+      <SearchForm>
         <Input
           label="Tác giả"
           value={detail.storyAuthor || ""}
@@ -70,7 +62,7 @@ const StoryDetailPage = () => {
         />
         <Input
           label="Trạng thái"
-          value={detail.status || ""}
+          value={detail.status === "1" ? "Hoạt động" : "Không hoạt động"}
           isReadOnly
           placeholder=""
         />{" "}
@@ -81,13 +73,13 @@ const StoryDetailPage = () => {
           placeholder=""
         />
         <Input
-          label="Truyện hot"
+          label="Truyện nổi bật"
           value={detail.isHot ? (detail.isHot === "1" ? "Có" : "Không") : ""}
           isReadOnly
           placeholder=""
         />
         <Input
-          label="Truyện hot top"
+          label="Truyện ưu tiên"
           value={
             detail.isTopFocus
               ? detail.isTopFocus === "1"
@@ -140,7 +132,7 @@ const StoryDetailPage = () => {
           isReadOnly
           placeholder=""
         />
-      </div>
+      </SearchForm>
     </>
   );
 };
