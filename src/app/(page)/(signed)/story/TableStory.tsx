@@ -3,7 +3,7 @@ import { StoryData } from "@/types/story";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { TableColumn } from "react-data-table-component";
-import { HiEye, HiPencilAlt } from "react-icons/hi";
+import { HiCollection, HiEye, HiPencilAlt } from "react-icons/hi";
 
 export interface TableStoryProps {
   currentPage: number;
@@ -39,23 +39,74 @@ export function TableStory({
     {
       name: "Tác giả",
       selector: (row: StoryData) => row.storyAuthor,
+      width: "150px",
     },
     {
-      name: "Thứ tự hiển thị",
+      name: "Thứ tự",
       selector: (row: StoryData) => row.displayOrder,
+      center: true,
+      style: { textAlign: "center" },
+      width: "100px",
     },
     {
       name: "Trạng thái",
-      selector: (row: StoryData) =>
-        row.status === "1" ? "Hoạt động" : "Không hoạt động",
+      selector: (row: StoryData) => row.status,
+      cell: (row: StoryData) => (
+        <p
+          className={`!text-xxs font-regular inline-flex rounded-full bg-opacity-10 px-3 py-1 ${
+            row.status === "1"
+              ? "bg-success text-success"
+              : row.status === "0"
+              ? "bg-danger text-danger"
+              : "bg-warning text-warning"
+          }`}
+        >
+          {row.status === "1" ? "Hoạt động" : "Khóa"}
+        </p>
+      ),
+      center: true,
+      style: { textAlign: "center" },
+      width: "120px",
     },
     {
       name: "Truyện nổi bật",
-      selector: (row: StoryData) => (row.isHot === "1" ? "Có" : "Không"),
+      selector: (row: StoryData) => row.isHot,
+      cell: (row: StoryData) => (
+        <p
+          className={`!text-xxs font-regular inline-flex rounded-full bg-opacity-10 px-3 py-1 ${
+            row.isHot === "1"
+              ? "bg-success text-success"
+              : row.isHot === "0"
+              ? "bg-danger text-danger"
+              : "bg-warning text-warning"
+          }`}
+        >
+          {row.isHot === "1" ? "Có" : "Không"}
+        </p>
+      ),
+      center: true,
+      style: { textAlign: "center" },
+      width: "120px",
     },
     {
       name: "Truyện ưu tiên",
-      selector: (row: StoryData) => (row.isTopFocus === "1" ? "Có" : "Không"),
+      selector: (row: StoryData) => row.isTopFocus,
+      cell: (row: StoryData) => (
+        <p
+          className={`!text-xxs font-regular inline-flex rounded-full bg-opacity-10 px-3 py-1 ${
+            row.isTopFocus === "1"
+              ? "bg-success text-success"
+              : row.isTopFocus === "0"
+              ? "bg-danger text-danger"
+              : "bg-warning text-warning"
+          }`}
+        >
+          {row.isTopFocus === "1" ? "Có" : "Không"}
+        </p>
+      ),
+      center: true,
+      style: { textAlign: "center" },
+      width: "120px",
     },
     {
       name: "Chức năng",
@@ -75,10 +126,18 @@ export function TableStory({
           >
             <HiPencilAlt className="h-4 w-4" />
           </button>
+          <button
+            onClick={() => handleViewChapters(row.storyIdStr)}
+            className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
+            title="Xem danh sách chương"
+          >
+            <HiCollection className="h-4 w-4" />
+          </button>
         </div>
       ),
       width: "150px",
       style: { textAlign: "center" },
+      center: true,
     },
   ];
 
@@ -90,6 +149,11 @@ export function TableStory({
   const handleEdit = (id: string) => {
     console.log("handleEdit", id);
     router.push(`/story/edit/${id}`);
+  };
+
+  const handleViewChapters = (id: string) => {
+    console.log("handleViewChapters", id);
+    router.push(`/story/${id}/chapters`);
   };
 
   return (

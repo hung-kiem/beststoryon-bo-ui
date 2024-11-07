@@ -1,6 +1,6 @@
 import Modal from "@/components/ui/Modal/Modal";
 import { closeModal } from "@/components/ui/Modal";
-import Button from "@/components/ui/Buttons/Button";
+import Button from "@/components/ui/Button/Button";
 import Input from "@/components/ui/Input/Input";
 
 export default function ModalDemoMD() {

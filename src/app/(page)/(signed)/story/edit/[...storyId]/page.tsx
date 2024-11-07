@@ -18,6 +18,9 @@ import Footer, {
   FooterButton,
   FooterButtons,
 } from "@/components/commons/Form/SearchFooter";
+import DetailForm from "@/components/commons/Form/DetailForm";
+import CollapsibleCard from "@/components/ui/CollapsibleCard/CollapsibleCard";
+import InputDetail from "@/components/ui/Input/InputDetail";
 
 interface FormData {
   storyName: string;
@@ -44,6 +47,11 @@ const fetcher = async (id: string) => {
 const storyStatusOptions = [
   { label: "Đang phát hành", value: "Ongoing" },
   { label: "Đã kết thúc", value: "Completed" },
+];
+
+const storyPublishOptions = [
+  { label: "Đang phát hành", value: "1" },
+  { label: "Chưa phát hành", value: "0" },
 ];
 
 const statusOptions = [
@@ -113,10 +121,13 @@ const StoryDetailPage = () => {
   const fetchData = useCallback(
     async (formData: FormData) => {
       const payload: UpdateStoryRequest = {
-        storyName: formData.storyName,
-        storyAuthor: formData.storyAuthor,
-        storyStatus: formData.storyStatus,
         storyNameAlias: formData.storyNameAlias,
+        storyStatus: formData.storyStatus,
+        isHot: formData.isHot,
+        isTopFocus: formData.isTopFocus,
+        viewNumber: formData.viewNumber,
+        likeCount: formData.likeCount,
+        published: formData.published,
       };
       console.log("payload", payload);
 
@@ -133,6 +144,7 @@ const StoryDetailPage = () => {
         console.error("Search error:", error);
       } finally {
         setIsSubmit(false);
+        router.push("/story");
       }
     },
     [storyId, router]
@@ -140,7 +152,7 @@ const StoryDetailPage = () => {
 
   const onSubmit = (data: FormData) => {
     console.log(data);
-    // fetchData(data);
+    fetchData(data);
   };
 
   if (!detail || isLoading) {
@@ -152,31 +164,32 @@ const StoryDetailPage = () => {
         <BreadcrumbItem pageName="Danh sách truyện" path="/story" />
         <BreadcrumbItem pageName="Chỉnh sửa truyện" path="#" />
       </BreadCrumb>
+      <DetailForm>
+        <CollapsibleCard title="Thông tin truyện">
+          <InputDetail label="Tên truyện" value={detail.storyName || ""} />
+          <div className="grid grid-cols-2 mt-6">
+            <div className="space-y-4">
+              <InputDetail label="Tác giả" value={detail.storyAuthor || ""} />
+              <InputDetail
+                label="Số lượng chương"
+                value={detail.chapterNumber || ""}
+              />
+            </div>
+            <div className="space-y-4">
+              <InputDetail
+                label="Alias name"
+                value={detail.storyNameAlias || ""}
+              />
+              <InputDetail
+                label="Ngày phát hành"
+                value={convertDateFormat(detail.publishedDate) || ""}
+              />
+            </div>
+          </div>
+        </CollapsibleCard>
+      </DetailForm>
+
       <SearchForm>
-        <Controller
-          name="storyName"
-          control={control}
-          render={() => (
-            <Input
-              label="Tên truyện"
-              value={watch("storyName")}
-              placeholder=""
-              onChange={(e) => setValue("storyName", e.target.value)}
-            />
-          )}
-        />
-        <Controller
-          name="storyAuthor"
-          control={control}
-          render={() => (
-            <Input
-              label="Tác giả"
-              value={watch("storyAuthor")}
-              placeholder=""
-              onChange={(e) => setValue("storyAuthor", e.target.value)}
-            />
-          )}
-        />
         <Controller
           name="storyStatus"
           control={control}
@@ -187,6 +200,19 @@ const StoryDetailPage = () => {
               options={storyStatusOptions}
               value={watch("storyStatus") || "Ongoing"}
               onSelect={(value) => setValue("storyStatus", value)}
+            />
+          )}
+        />
+        <Controller
+          name="published"
+          control={control}
+          render={({ field }) => (
+            <Select
+              title="Trạng thái phát hành"
+              label="Trạng thái phát hành"
+              options={storyPublishOptions}
+              value={field.value}
+              onSelect={field.onChange}
             />
           )}
         />
@@ -213,6 +239,45 @@ const StoryDetailPage = () => {
               options={statusOptions}
               value={watch("isTopFocus")}
               onSelect={(value) => setValue("isTopFocus", value)}
+            />
+          )}
+        />
+        <Controller
+          name="viewNumber"
+          control={control}
+          render={({ field }) => (
+            <Input
+              label="Lượt xem"
+              type="number"
+              value={field.value}
+              onChange={field.onChange}
+              className="w-full"
+            />
+          )}
+        />
+        <Controller
+          name="likeCount"
+          control={control}
+          render={({ field }) => (
+            <Input
+              label="Lượt like"
+              type="number"
+              value={field.value}
+              onChange={field.onChange}
+              className="w-full"
+            />
+          )}
+        />
+        <Controller
+          name="storyNameAlias"
+          control={control}
+          render={({ field }) => (
+            <Input
+              label="Alias name"
+              type="text"
+              value={field.value}
+              onChange={field.onChange}
+              className="w-full"
             />
           )}
         />

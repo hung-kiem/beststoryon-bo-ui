@@ -150,7 +150,7 @@ const Category = () => {
             Tìm kiếm
           </FooterButton>
           <FooterButton
-            type="secondary"
+            type="outline"
             onClick={() => router.push("/category/create")}
           >
             Thêm mới

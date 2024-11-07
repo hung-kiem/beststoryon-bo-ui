@@ -19,7 +19,8 @@ interface ButtonProps {
   children: ReactNode;
   className?: string;
   isDisabled?: boolean;
-  isLoading?: boolean; // Thêm thuộc tính isLoading
+  isLoading?: boolean; // Thêm biến isLoading
+  htmlType?: "button" | "submit" | "reset";
 }
 
 const Button: FC<ButtonProps> = ({
@@ -31,50 +32,74 @@ const Button: FC<ButtonProps> = ({
   children,
   className,
   isDisabled = false,
-  isLoading = false,
+  isLoading = false, // Giá trị mặc định là false
+  htmlType = "button",
 }) => {
   const buttonClasses = classNames(
     className,
-    "inline-flex items-center justify-center whitespace-nowrap border text-center font-medium transition",
+    "inline-flex items-center justify-center whitespace-nowrap border text-center font-medium transition hover:bg-opacity-90",
     {
-      "border-primary bg-primary text-white": type === "primary" && !isDisabled,
+      "border-primary bg-primary text-white": type === "primary",
       "border-primary text-primary hover:bg-primary hover:text-white":
-        type === "outline" && !isDisabled,
-      "border-secondary bg-secondary text-white":
-        type === "secondary" && !isDisabled,
+        type === "outline",
+      "border-secondary bg-secondary text-white": type === "secondary",
       "border-secondary text-secondary hover:bg-secondary hover:text-white":
-        type === "outline-secondary" && !isDisabled,
+        type === "outline-secondary",
       "border-black bg-black text-white hover:bg-[rgb(46,50,54)] dark:border-white dark:hover:bg-[rgb(21,22,23)]":
-        !type || (type === "black" && !isDisabled),
+        !type || type === "black",
       "border-black text-black hover:bg-black hover:text-white dark:border-white dark:text-white":
-        type === "outline-black" && !isDisabled,
+        type === "outline-black",
 
       "h-[36px] px-4 text-sm": size === "small",
       "text-md h-[42px] px-6": size === "medium",
-      "h-[56px] px-8 text-lg": size === "large",
+      "h-[56px] px-8 text-lg": !size || size === "large",
+
       "rounded-full": size === "large",
       "rounded-lg": size !== "large",
 
-      "opacity-50 cursor-not-allowed": isDisabled || isLoading,
-      "hover:bg-opacity-90": !isDisabled && !isLoading,
+      "opacity-50 cursor-not-allowed": isDisabled || isLoading, // Thêm isLoading để disable khi loading
     }
   );
 
-  const content = (
-    <>
-      {isLoading ? (
-        <span className="loader mr-2 inline-block h-4 w-4 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
-      ) : (
-        !!icon && <span className="mr-2">{icon}</span>
-      )}
-      {children}
-    </>
+  const LoadingIcon = (
+    <svg
+      className="animate-spin h-5 w-5 text-white"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      ></circle>
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8v8H4z"
+      ></path>
+    </svg>
   );
 
-  if (href && !isDisabled && !isLoading) {
+  if (href) {
     return (
-      <Link href={href} onClick={onClick} className={buttonClasses}>
-        {content}
+      <Link href={isDisabled || isLoading ? "#" : href} passHref legacyBehavior>
+        <a
+          className={buttonClasses}
+          onClick={isDisabled || isLoading ? undefined : onClick}
+          aria-disabled={isDisabled || isLoading}
+          tabIndex={isDisabled || isLoading ? -1 : undefined}
+        >
+          {isLoading ? (
+            <span className="mr-2">{LoadingIcon}</span>
+          ) : (
+            icon && <span className="mr-2">{icon}</span>
+          )}
+          {children}
+        </a>
       </Link>
     );
   }
@@ -82,10 +107,16 @@ const Button: FC<ButtonProps> = ({
   return (
     <button
       className={buttonClasses}
-      onClick={!isDisabled && !isLoading ? onClick : undefined}
+      onClick={isDisabled || isLoading ? undefined : onClick}
       disabled={isDisabled || isLoading}
+      type={htmlType}
     >
-      {content}
+      {isLoading ? (
+        <span className="mr-2">{LoadingIcon}</span>
+      ) : (
+        icon && <span className="mr-2">{icon}</span>
+      )}
+      {children}
     </button>
   );
 };

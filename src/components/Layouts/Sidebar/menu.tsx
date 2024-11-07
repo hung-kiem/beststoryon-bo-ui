@@ -1,9 +1,6 @@
-import IconUIElements from "@/components/ui/icons/IconUIElements";
-import IconChart from "@/components/ui/icons/IconChart";
-import IconTable from "@/components/ui/icons/IconTable";
-import IconCalendar from "@/components/ui/icons/IconCalendar";
-import IconComponent from "@/components/ui/icons/IconComponent";
-import IconUser from "@/components/ui/icons/IconUser";
+import IconBook from "@/components/ui/icons/IconBook";
+import IconCategory from "@/components/ui/icons/IconCategory";
+import IconChapter from "@/components/ui/icons/IconChapter";
 import IconDashboard from "@/components/ui/icons/IconDashboard";
 import { ReactNode } from "react";
 
@@ -20,28 +17,23 @@ export const menuGroups: Array<{
   menuItems: Array<MenuItems>;
 }> = [
   {
-    name: "PAGES",
+    name: "MENU",
     modes: ["production", "development"],
     menuItems: [
       {
-        icon: <IconComponent />,
-        label: "Category",
-        route: "/category",
-      },
-      {
-        icon: <IconComponent />,
-        label: "Tag",
-        route: "/tag",
-      },
-      {
-        icon: <IconComponent />,
+        icon: <IconBook />,
         label: "Story",
         route: "/story",
       },
       {
-        icon: <IconComponent />,
+        icon: <IconChapter />,
         label: "Chapter",
         route: "/chapter",
+      },
+      {
+        icon: <IconCategory />,
+        label: "Category",
+        route: "/category",
       },
       {
         icon: <IconDashboard />,

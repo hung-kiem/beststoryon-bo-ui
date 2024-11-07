@@ -4,6 +4,7 @@ import { TableColumn } from "react-data-table-component";
 import { HiEye, HiPencilAlt } from "react-icons/hi";
 import TableThree from "@/components/ui/Tables/TableThree";
 import { useRouter } from "next/navigation";
+import { openModal } from "@/components/ui/Modal";
 
 export interface ITableCategoryProps {
   currentPage: number;
@@ -41,14 +42,27 @@ export function TableCategory({
       selector: (row: CategoryItem) => row.catName,
     },
     {
-      name: "Thứ tự hiển thị",
+      name: "Thứ tự",
       selector: (row: CategoryItem) => row.displayOrder,
+      center: true,
       style: { textAlign: "center" },
     },
     {
       name: "Trạng thái",
-      selector: (row: CategoryItem) =>
-        row.status === "1" ? "Hoạt động" : "Không hoạt động",
+      selector: (row: CategoryItem) => row.status,
+      cell: (row: CategoryItem) => (
+        <p
+          className={`!text-xxs font-regular inline-flex rounded-full bg-opacity-10 px-3 py-1 ${
+            row.status === "1"
+              ? "bg-success text-success"
+              : row.status === "0"
+              ? "bg-danger text-danger"
+              : "bg-warning text-warning"
+          }`}
+        >
+          {row.status === "1" ? "Hoạt động" : "Khóa"}
+        </p>
+      ),
     },
     {
       name: "Nguồn",
@@ -58,13 +72,13 @@ export function TableCategory({
       name: "Chức năng",
       cell: (row: CategoryItem) => (
         <div className="border-gray-5 alight-center flex w-full justify-center gap-2 border-l-2 pl-2">
-          <button
+          {/* <button
             onClick={() => handleViewDetails(row.catId)}
             className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
             title="Xem chi tiết"
           >
             <HiEye className="h-4 w-4" />
-          </button>
+          </button> */}
           <button
             onClick={() => handleEdit(row.catId)}
             className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
@@ -80,7 +94,10 @@ export function TableCategory({
   ];
 
   const handleViewDetails = (id: string) => {
-    router.push(`/category/${id}`);
+    // router.push(`/category/${id}`);
+    openModal("category-detail", {
+      categoryData: data.find((item) => item.catId === id),
+    });
   };
 
   const handleEdit = (id: string) => {

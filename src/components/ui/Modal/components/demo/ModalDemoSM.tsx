@@ -1,7 +1,7 @@
 import Modal from "@/components/ui/Modal/Modal";
 import { closeModal } from "@/components/ui/Modal";
-import Button from "@/components/ui/Buttons/Button";
 import Input from "@/components/ui/Input/Input";
+import Button from "@/components/ui/Button/Button";
 
 export default function ModalDemoSM() {
   return (

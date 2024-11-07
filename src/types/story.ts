@@ -92,7 +92,10 @@ export interface StoryCategoryMap {
 
 export interface UpdateStoryRequest {
   storyNameAlias: string;
-  storyAuthor: string;
-  storyName: string;
   storyStatus: string;
+  viewNumber: number;
+  likeCount: number;
+  isHot: string;
+  isTopFocus: string;
+  published: string;
 }
