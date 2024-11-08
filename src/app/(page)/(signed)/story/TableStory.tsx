@@ -4,7 +4,15 @@ import { useRouter } from "next/navigation";
 import * as React from "react";
 import { TableColumn } from "react-data-table-component";
 import { HiCollection, HiEye, HiPencilAlt } from "react-icons/hi";
-import { convertDateFormat, formatDate } from "../../../../../utils/dateUtils";
+import {
+  convertDateFormat,
+  convertDateToString,
+  convertStringToDate,
+  formatDate,
+  formatDateTime,
+} from "../../../../../utils/dateUtils";
+import CheckboxThree from "@/components/ui/Checkbox/CheckboxThree";
+import CheckboxTwo from "@/components/ui/Checkbox/CheckboxTwo";
 
 export interface TableStoryProps {
   currentPage: number;
@@ -47,17 +55,7 @@ export function TableStory({
       name: "Is Hot",
       selector: (row: StoryData) => row.isHot,
       cell: (row: StoryData) => (
-        <p
-          className={`!text-xxs font-regular inline-flex rounded-full bg-opacity-10 px-3 py-1 ${
-            row.isHot === "1"
-              ? "bg-success text-success"
-              : row.isHot === "0"
-              ? "bg-danger text-danger"
-              : "bg-warning text-warning"
-          }`}
-        >
-          {row.isHot === "1" ? "Có" : "Không"}
-        </p>
+        <CheckboxTwo isChecked={row.isHot === "1"} isDisabled />
       ),
       center: true,
       style: { textAlign: "center" },
@@ -67,17 +65,7 @@ export function TableStory({
       name: "Is Top Focus",
       selector: (row: StoryData) => row.isTopFocus,
       cell: (row: StoryData) => (
-        <p
-          className={`!text-xxs font-regular inline-flex rounded-full bg-opacity-10 px-3 py-1 ${
-            row.isTopFocus === "1"
-              ? "bg-success text-success"
-              : row.isTopFocus === "0"
-              ? "bg-danger text-danger"
-              : "bg-warning text-warning"
-          }`}
-        >
-          {row.isTopFocus === "1" ? "Có" : "Không"}
-        </p>
+        <CheckboxTwo isChecked={row.isTopFocus === "1"} isDisabled />
       ),
       center: true,
       style: { textAlign: "center" },
@@ -85,7 +73,7 @@ export function TableStory({
     },
     {
       name: "Lượt like",
-      selector: (row: StoryData) => row.likeCount || "",
+      selector: (row: StoryData) => row.likeCount || "0",
       width: "150px",
       center: true,
     },
@@ -123,11 +111,11 @@ export function TableStory({
     {
       name: "Ngày tạo",
       selector: (row: StoryData) => {
-        return row.createdDate || "";
+        return row.createdDate ? formatDateTime(row.createdDate) : "";
       },
       center: true,
       style: { textAlign: "center" },
-      width: "100px",
+      width: "200px",
     },
     {
       name: "Chức năng",

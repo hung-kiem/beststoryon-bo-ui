@@ -9,7 +9,10 @@ import { useParams } from "next/navigation";
 import useSWR from "swr";
 import Loader from "@/components/commons/Loader";
 import Input from "@/components/ui/Input/Input";
-import { convertDateFormat } from "../../../../../../utils/dateUtils";
+import {
+  convertDateFormat,
+  formatDateTime,
+} from "../../../../../../utils/dateUtils";
 import { Controller } from "react-hook-form";
 import InputDetail from "@/components/ui/Input/InputDetail";
 
@@ -66,41 +69,98 @@ const StoryDetailPage = () => {
               value={detail.storyStatus || ""}
             />
             <InputDetail label="Lượt xem" value={detail.viewNumber || ""} />
+            <InputDetail
+              label="Thứ tự hiển thị"
+              value={detail.displayOrder || ""}
+            />
+            <div className="flex items-center gap-4">
+              {/* Thêm lớp whitespace-nowrap để ngăn nhãn xuống dòng */}
+              <label className="basis-1/3 text-sm text-neutral-600 dark:text-white whitespace-nowrap">
+                Ảnh truyện
+              </label>
+              <div className={`basis-2/3 text-sm font-semibold`}>
+                {detail.urlAvatar ? (
+                  <img
+                    src="https://plus.unsplash.com/premium_photo-1683910767532-3a25b821f7ae?q=80&w=2608&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    alt="Ảnh truyện"
+                    className="w-40 h-40 object-cover rounded"
+                  />
+                ) : (
+                  <p className="text-gray-500 dark:text-gray-400">
+                    {detail.urlAvatar || "Không có ảnh"}
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
           <div className="space-y-4">
             <InputDetail
-              label="Truyện nổi bật"
+              label="Is Hot"
               value={
-                detail.isHot ? (detail.isHot === "1" ? "Có" : "Không") : ""
+                detail.isHot ? (detail.isHot === "1" ? "True" : "False") : ""
               }
             />
             <InputDetail
-              label="Truyện ưu tiên"
+              label="Is Top Focus"
               value={
                 detail.isTopFocus
                   ? detail.isTopFocus === "1"
-                    ? "Có"
-                    : "Không"
+                    ? "True"
+                    : "False"
                   : ""
               }
             />
-            <InputDetail label="Lượt like" value={detail.likeCount || ""} />
+            <InputDetail label="Lượt like" value={detail.likeCount || "0"} />
             <InputDetail
               label="Alias name"
               value={detail.storyNameAlias || ""}
             />
-            <InputDetail
-              label="Trạng thái phát hành"
-              value={
-                detail.published === "1" ? "Đã phát hành" : "Chưa phát hành"
-              }
-            />
+            <InputDetail label="Danh mục" value={detail.catCodeRef || ""} />
             <InputDetail
               label="Ngày phát hành"
               value={convertDateFormat(detail.publishedDate) || ""}
             />
           </div>
         </div>
+        {/* Đường Kẻ Ngang Phân Cách */}
+        <hr className="my-6 border-gray-300 dark:border-gray-700" />
+
+        {/* Tóm Tắt Truyện */}
+        <div className="space-y-2 mt-5">
+          <h2 className="text-sm text-neutral-600 dark:text-white whitespace-nowrap">
+            Tóm tắt truyện
+          </h2>
+          <div
+            className="prose max-w-none text-gray-600 dark:text-gray-300 mt-20"
+            dangerouslySetInnerHTML={{ __html: detail.storySummary || "" }}
+          />
+        </div>
+        <hr className="my-6 border-gray-300 dark:border-gray-700" />
+        <div className="grid grid-cols-2">
+          <div className="space-y-4">
+            <InputDetail label="Người tạo" value={detail.createdBy || ""} />
+            <InputDetail label="Người sửa" value={detail.modifiedBy || ""} />
+          </div>
+          <div className="space-y-4">
+            <InputDetail
+              label="Thời gian tạo"
+              value={
+                detail.createdDate ? formatDateTime(detail.createdDate) : ""
+              }
+            />
+            <InputDetail
+              label="Thời gian sửa"
+              value={
+                detail.modifiedDate ? formatDateTime(detail.modifiedDate) : ""
+              }
+            />
+          </div>
+        </div>
+        <InputDetail
+          label="Link gốc"
+          value={detail.urlOriginCrawl || ""}
+          isBold={false}
+        />
       </div>
     </>
   );

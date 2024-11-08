@@ -98,4 +98,6 @@ export interface UpdateStoryRequest {
   isHot: string;
   isTopFocus: string;
   published: string;
+  storyName: string;
+  displayOrder: number;
 }

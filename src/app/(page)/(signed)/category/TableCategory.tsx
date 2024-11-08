@@ -5,6 +5,7 @@ import { HiEye, HiPencilAlt } from "react-icons/hi";
 import TableThree from "@/components/ui/Tables/TableThree";
 import { useRouter } from "next/navigation";
 import { openModal } from "@/components/ui/Modal";
+import { formatDateTime } from "../../../../../utils/dateUtils";
 
 export interface ITableCategoryProps {
   currentPage: number;
@@ -34,18 +35,12 @@ export function TableCategory({
       width: "60px",
     },
     {
-      name: "Mã danh mục",
-      selector: (row: CategoryItem) => row.catCode,
-    },
-    {
       name: "Tên danh mục",
       selector: (row: CategoryItem) => row.catName,
     },
     {
-      name: "Thứ tự",
-      selector: (row: CategoryItem) => row.displayOrder,
-      center: true,
-      style: { textAlign: "center" },
+      name: "Mã danh mục",
+      selector: (row: CategoryItem) => row.catCode,
     },
     {
       name: "Trạng thái",
@@ -65,20 +60,34 @@ export function TableCategory({
       ),
     },
     {
-      name: "Nguồn",
+      name: "Website gốc",
       selector: (row: CategoryItem) => row.originSite,
+    },
+    {
+      name: "Thứ tự",
+      selector: (row: CategoryItem) => row.displayOrder,
+      center: true,
+      style: { textAlign: "center" },
+    },
+    {
+      name: "Ngày tạo",
+      selector: (row: CategoryItem) =>
+        row.createdDate ? formatDateTime(row.createdDate) : "",
+      center: true,
+      style: { textAlign: "center" },
+      width: "150px",
     },
     {
       name: "Chức năng",
       cell: (row: CategoryItem) => (
         <div className="border-gray-5 alight-center flex w-full justify-center gap-2 border-l-2 pl-2">
-          {/* <button
+          <button
             onClick={() => handleViewDetails(row.catId)}
             className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
             title="Xem chi tiết"
           >
             <HiEye className="h-4 w-4" />
-          </button> */}
+          </button>
           <button
             onClick={() => handleEdit(row.catId)}
             className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
@@ -90,14 +99,15 @@ export function TableCategory({
       ),
       width: "150px",
       style: { textAlign: "center" },
+      center: true,
     },
   ];
 
   const handleViewDetails = (id: string) => {
-    // router.push(`/category/${id}`);
-    openModal("category-detail", {
-      categoryData: data.find((item) => item.catId === id),
-    });
+    router.push(`/category/${id}`);
+    // openModal("category-detail", {
+    //   categoryData: data.find((item) => item.catId === id),
+    // });
   };
 
   const handleEdit = (id: string) => {

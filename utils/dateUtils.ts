@@ -16,3 +16,17 @@ export const convertDateFormat = (publishedDate: string): string => {
 
   return `${day}/${month}/${year}`;
 };
+
+// function convert date to string with pattern
+export const convertDateToString = (date: Date, pattern: string): string => {
+  return moment(date).format(pattern);
+};
+
+// function convert string to date
+export const convertStringToDate = (date: string, pattern: string): Date => {
+  return moment(date, pattern).toDate();
+};
+
+export const formatDateTime = (dateString: string): string => {
+  return moment(dateString).format("DD/MM/YYYY HH:mm:ss");
+};

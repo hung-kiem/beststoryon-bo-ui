@@ -2,9 +2,14 @@ import React, { ReactNode, useState, MouseEvent } from "react";
 interface CollapsibleCardProps {
   title: string;
   children: ReactNode;
+  defaultOpen?: boolean;
 }
-const CollapsibleCard = ({ title, children }: CollapsibleCardProps) => {
-  const [isOpen, setIsOpen] = useState(true);
+const CollapsibleCard = ({
+  title,
+  defaultOpen = true,
+  children,
+}: CollapsibleCardProps) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   const toggleCollapse = () => setIsOpen(!isOpen);
 

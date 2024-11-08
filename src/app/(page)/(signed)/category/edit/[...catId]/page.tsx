@@ -50,7 +50,7 @@ const EditCategory = () => {
     }
   );
 
-  const { control, handleSubmit, reset } = useForm<FormData>({
+  const { control, handleSubmit, reset, watch, setValue } = useForm<FormData>({
     defaultValues: {
       status: "1",
       catName: "",
@@ -130,7 +130,8 @@ const EditCategory = () => {
               className="w-full"
               type="text"
               placeholder="Nhập mã danh mục"
-              {...field}
+              value={watch("catCode")}
+              onChange={(e) => setValue("catCode", e.target.value)}
             />
           )}
         />
@@ -144,7 +145,8 @@ const EditCategory = () => {
               className="w-full"
               type="text"
               placeholder="Nhập tên danh mục"
-              {...field}
+              value={watch("catName")}
+              onChange={(e) => setValue("catName", e.target.value)}
             />
           )}
         />
@@ -156,8 +158,8 @@ const EditCategory = () => {
               title="Trạng thái"
               label="Trạng thái"
               options={statusOptions}
-              {...field}
-              onSelect={(value) => field.onChange(value)}
+              value={watch("status")}
+              onSelect={(e) => setValue("status", e)}
             />
           )}
         />
@@ -171,7 +173,8 @@ const EditCategory = () => {
               className="w-full"
               type="number"
               placeholder="Nhập thứ tự hiển thị"
-              {...field}
+              value={watch("displayOrder")}
+              onChange={(e) => setValue("displayOrder", Number(e.target.value))}
             />
           )}
         />
@@ -180,12 +183,13 @@ const EditCategory = () => {
           control={control}
           render={({ field }) => (
             <Input
-              label="Nguồn"
+              label="Link gốc"
               layout="vertical"
               className="w-full"
               type="text"
               placeholder="Nhập nguồn"
-              {...field}
+              value={watch("originSite")}
+              onChange={(e) => setValue("originSite", e.target.value)}
             />
           )}
         />

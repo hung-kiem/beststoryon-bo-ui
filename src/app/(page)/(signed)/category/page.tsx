@@ -134,8 +134,8 @@ const Category = () => {
               title="Trạng thái"
               label="Trạng thái"
               options={statusOptions}
-              onSelect={(value) => field.onChange(value)}
-              {...field}
+              onSelect={(value) => setValue("status", value)}
+              value={watch("status")}
             />
           )}
         />
