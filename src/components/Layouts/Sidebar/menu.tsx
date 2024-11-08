@@ -35,11 +35,6 @@ export const menuGroups: Array<{
         label: "Category",
         route: "/category",
       },
-      {
-        icon: <IconDashboard />,
-        label: "Dashboard",
-        route: "/dashboard",
-      },
     ],
   },
 ];

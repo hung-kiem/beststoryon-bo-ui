@@ -5,7 +5,6 @@ import {
   SearchStoryResponse,
   StoryData,
 } from "@/types/story";
-import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { storyApi } from "../../../../../api-client/story-api";
@@ -40,7 +39,6 @@ const statusOptions = [
 ];
 
 const StoryList = () => {
-  const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [results, setResults] = useState<StoryData[]>([]);
@@ -115,16 +113,6 @@ const StoryList = () => {
       </BreadCrumb>
       <SearchForm>
         <Controller
-          name="catId"
-          control={control}
-          render={() => (
-            <SelectCategory
-              onChange={(value) => setValue("catId", value)}
-              defaultValue={watch("catId")}
-            />
-          )}
-        />
-        <Controller
           name="storyName"
           control={control}
           render={() => (
@@ -136,6 +124,16 @@ const StoryList = () => {
               placeholder="Nhập tên truyện"
               value={watch("storyName")}
               onChange={(e) => setValue("storyName", e.target.value)}
+            />
+          )}
+        />
+        <Controller
+          name="catId"
+          control={control}
+          render={() => (
+            <SelectCategory
+              onChange={(value) => setValue("catId", value)}
+              defaultValue={watch("catId")}
             />
           )}
         />

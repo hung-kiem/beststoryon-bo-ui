@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import * as React from "react";
 import { TableColumn } from "react-data-table-component";
 import { HiCollection, HiEye, HiPencilAlt } from "react-icons/hi";
+import { convertDateFormat, formatDate } from "../../../../../utils/dateUtils";
 
 export interface TableStoryProps {
   currentPage: number;
@@ -28,25 +29,65 @@ export function TableStory({
   const columns: TableColumn<StoryData>[] = [
     {
       name: "STT",
-      cell: (row: StoryData, index: number) =>
-        (currentPage - 1) * pageSize + index + 1,
+      cell: (_a, index: number) => (currentPage - 1) * pageSize + index + 1,
       width: "60px",
     },
     {
       name: "Tên truyện",
       selector: (row: StoryData) => row.storyName,
+      width: "600px",
     },
     {
-      name: "Tác giả",
-      selector: (row: StoryData) => row.storyAuthor,
-      width: "150px",
+      name: "Số chương",
+      selector: (row: StoryData) => row.chapterNumber,
+      width: "100px",
+      center: true,
     },
     {
-      name: "Thứ tự",
-      selector: (row: StoryData) => row.displayOrder,
+      name: "Is Hot",
+      selector: (row: StoryData) => row.isHot,
+      cell: (row: StoryData) => (
+        <p
+          className={`!text-xxs font-regular inline-flex rounded-full bg-opacity-10 px-3 py-1 ${
+            row.isHot === "1"
+              ? "bg-success text-success"
+              : row.isHot === "0"
+              ? "bg-danger text-danger"
+              : "bg-warning text-warning"
+          }`}
+        >
+          {row.isHot === "1" ? "Có" : "Không"}
+        </p>
+      ),
       center: true,
       style: { textAlign: "center" },
-      width: "100px",
+      width: "120px",
+    },
+    {
+      name: "Is Top Focus",
+      selector: (row: StoryData) => row.isTopFocus,
+      cell: (row: StoryData) => (
+        <p
+          className={`!text-xxs font-regular inline-flex rounded-full bg-opacity-10 px-3 py-1 ${
+            row.isTopFocus === "1"
+              ? "bg-success text-success"
+              : row.isTopFocus === "0"
+              ? "bg-danger text-danger"
+              : "bg-warning text-warning"
+          }`}
+        >
+          {row.isTopFocus === "1" ? "Có" : "Không"}
+        </p>
+      ),
+      center: true,
+      style: { textAlign: "center" },
+      width: "120px",
+    },
+    {
+      name: "Lượt like",
+      selector: (row: StoryData) => row.likeCount || "",
+      width: "150px",
+      center: true,
     },
     {
       name: "Trạng thái",
@@ -69,44 +110,24 @@ export function TableStory({
       width: "120px",
     },
     {
-      name: "Truyện nổi bật",
-      selector: (row: StoryData) => row.isHot,
-      cell: (row: StoryData) => (
-        <p
-          className={`!text-xxs font-regular inline-flex rounded-full bg-opacity-10 px-3 py-1 ${
-            row.isHot === "1"
-              ? "bg-success text-success"
-              : row.isHot === "0"
-              ? "bg-danger text-danger"
-              : "bg-warning text-warning"
-          }`}
-        >
-          {row.isHot === "1" ? "Có" : "Không"}
-        </p>
-      ),
+      name: "Trạng thái truyện",
+      selector: (row: StoryData) => row.storyStatus,
+      width: "150px",
       center: true,
-      style: { textAlign: "center" },
-      width: "120px",
     },
     {
-      name: "Truyện ưu tiên",
-      selector: (row: StoryData) => row.isTopFocus,
-      cell: (row: StoryData) => (
-        <p
-          className={`!text-xxs font-regular inline-flex rounded-full bg-opacity-10 px-3 py-1 ${
-            row.isTopFocus === "1"
-              ? "bg-success text-success"
-              : row.isTopFocus === "0"
-              ? "bg-danger text-danger"
-              : "bg-warning text-warning"
-          }`}
-        >
-          {row.isTopFocus === "1" ? "Có" : "Không"}
-        </p>
-      ),
+      name: "Tác giả",
+      selector: (row: StoryData) => row.storyAuthor,
+      width: "150px",
+    },
+    {
+      name: "Ngày tạo",
+      selector: (row: StoryData) => {
+        return row.createdDate || "";
+      },
       center: true,
       style: { textAlign: "center" },
-      width: "120px",
+      width: "100px",
     },
     {
       name: "Chức năng",

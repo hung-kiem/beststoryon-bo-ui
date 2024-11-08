@@ -64,7 +64,7 @@ const Select = ({
             } text-sm`}
             onClick={() => !isDisabled && setIsDropdownOpen(!isDropdownOpen)}
           >
-            {value ? (
+            {value || value === "" ? (
               options.find((option) => option.value === value)?.label
             ) : (
               <span className="text-sm text-body dark:text-bodydark">

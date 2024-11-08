@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const scopeKey = "_next__sc" as any;
-const redirectKey = "_next__rd" as any;
-
 export async function middleware(request: NextRequest) {
   let response: NextResponse;
   if (new URL(request.url).pathname == "/") {
-    response = NextResponse.redirect(new URL("/dashboard", request.url));
+    response = NextResponse.redirect(new URL("/story", request.url));
     return response;
   } else {
     response = NextResponse.next();
