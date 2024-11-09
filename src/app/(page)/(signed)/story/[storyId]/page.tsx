@@ -1,6 +1,5 @@
 "use client";
 
-import SearchForm from "@/components/commons/Form/SearchForm";
 import BreadCrumb from "@/components/ui/Breadcrumb/Breadcrumb";
 import BreadcrumbItem from "@/components/ui/Breadcrumb/BreadcrumbItem";
 import React from "react";
@@ -8,23 +7,13 @@ import { storyApi } from "../../../../../../api-client/story-api";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
 import Loader from "@/components/commons/Loader";
-import Input from "@/components/ui/Input/Input";
-import {
-  convertDateFormat,
-  formatDateTime,
-} from "../../../../../../utils/dateUtils";
-import { Controller } from "react-hook-form";
 import InputDetail from "@/components/ui/Input/InputDetail";
+import { convertDateFormat, formatDateTime } from "@utils/dateUtils";
 
 const fetcher = async (id: string) => {
   const response = await storyApi.getDetail(id);
   return response;
 };
-
-const statusOptions = [
-  { label: "Hoạt động", value: "1" },
-  { label: "Không hoạt động", value: "0" },
-];
 
 const StoryDetailPage = () => {
   const params = useParams();
@@ -52,7 +41,14 @@ const StoryDetailPage = () => {
         <BreadcrumbItem pageName="Chi tiết truyện" path="#" />
       </BreadCrumb>
       <div className="relative space-y-4 rounded-xl bg-white p-4 dark:bg-black">
-        <InputDetail label="Tên truyện" value={detail.storyName || ""} />
+        <div className="flex items-center gap-4">
+          <label className=" text-sm text-neutral-600 dark:text-white whitespace-nowrap">
+            Tên truyện:
+          </label>
+          <div className={`font-semibold text-sm`}>
+            {detail.storyName || ""}
+          </div>
+        </div>
         <div className="grid grid-cols-2">
           <div className="space-y-4">
             <InputDetail label="Tác giả" value={detail.storyAuthor || ""} />
@@ -156,11 +152,12 @@ const StoryDetailPage = () => {
             />
           </div>
         </div>
-        <InputDetail
-          label="Link gốc"
-          value={detail.urlOriginCrawl || ""}
-          isBold={false}
-        />
+        <div className="flex items-center gap-4">
+          <label className=" text-sm text-neutral-600 dark:text-white whitespace-nowrap">
+            Link gốc:
+          </label>
+          <div className={`text-sm`}>{detail?.urlOriginCrawl || ""}</div>
+        </div>
       </div>
     </>
   );

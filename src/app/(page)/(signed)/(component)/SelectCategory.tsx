@@ -17,20 +17,10 @@ const SelectCategory: React.FC<SelectCategoryProps> = ({
     data: apps,
     isValidating,
     isLoading,
-  } = useSWR(
-    "getCategory",
-    () =>
-      categoryApi.getAll({
-        catName: "",
-        status: "",
-        pageIndex: 1,
-        pageSize: 100,
-      }),
-    {
-      dedupingInterval: 3600000,
-      revalidateOnFocus: false,
-    }
-  );
+  } = useSWR("getCategory", () => categoryApi.getAll(), {
+    dedupingInterval: 3600000,
+    revalidateOnFocus: false,
+  });
   const [catOptions, setCatOptions] = useState<Option[]>([]);
 
   useEffect(() => {

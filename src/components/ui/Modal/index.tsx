@@ -5,8 +5,9 @@ import { useDeferredValue } from "react";
 import ModalSendSms from "./components/ModalSendSms";
 import { CategoryItem } from "@/types/category";
 import ModalCategoryDetail from "./components/ModalCategoryDetail";
+import ModalConfirm from "./components/ModalConfirm";
 
-type modal = "send-sms" | "category-detail";
+type modal = "send-sms" | "category-detail" | "confirm";
 
 export interface ModalData {
   phone?: string;
@@ -14,6 +15,9 @@ export interface ModalData {
   onSubmitted?: (phone: string, content: string) => void;
   more?: string;
   categoryData?: CategoryItem;
+  title: string;
+  contentConfirm: string;
+  onConfirm?: (data?: any) => void;
 }
 
 export const store = create<{
@@ -29,11 +33,12 @@ export const store = create<{
 export default function ModalUI() {
   const { modal, data } = store();
   const modalType = useDeferredValue(modal);
-  const items = useDeferredValue(data || {});
+  const items = useDeferredValue(data || { title: "", contentConfirm: "" });
   return (
     <>
       {modalType == "send-sms" && <ModalSendSms {...items} />}
       {modalType == "category-detail" && <ModalCategoryDetail {...items} />}
+      {modalType == "confirm" && <ModalConfirm {...items} />}
     </>
   );
 }

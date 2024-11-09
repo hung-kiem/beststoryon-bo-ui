@@ -33,7 +33,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     >
       <main>
         <div
-          className={`relative mx-auto max-w-[calc(100vw-20rem)] p-4 transition-all duration-300`}
+          className={`relative mx-auto max-w-[calc(100vw-15rem)] p-4 transition-all duration-300`}
         >
           {breadCrumbs && <Breadcrumb>{breadCrumbs}</Breadcrumb>}
           {detailForms && (
