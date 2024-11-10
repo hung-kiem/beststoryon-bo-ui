@@ -12,6 +12,7 @@ import BreadcrumbItem from "@/components/ui/Breadcrumb/BreadcrumbItem";
 import CollapsibleCard from "@/components/ui/CollapsibleCard/CollapsibleCard";
 import Input from "@/components/ui/Input/Input";
 import InputDetail from "@/components/ui/Input/InputDetail";
+import { closeModal, ModalData, openModal } from "@/components/ui/Modal";
 import Select from "@/components/ui/Select/Select";
 import { BaseResponse } from "@/types/baseResponse";
 import { UpdateChapterRequest } from "@/types/chapter";
@@ -107,6 +108,46 @@ const ChapterEdit = () => {
     fetchData(data);
   };
 
+  const handleConfirmCrawl = (chapterId: string) => {
+    console.log("handleConfirmCrawl", chapterId);
+    const data: ModalData = {
+      onConfirm: async () => {
+        console.log("onSubmitted", chapterId);
+        setIsSubmitting(true);
+        try {
+          await chapterApi.reCrawlChapter(chapterId);
+          router.push(`/story/${storyId}/chapters`);
+        } catch (error) {
+          console.error("reCrawlChapter", error);
+        } finally {
+          setIsSubmitting(false);
+          closeModal();
+        }
+      },
+    };
+    openModal("crawl-chapter", data);
+  };
+
+  const handleConfirmDelete = (chapterId: string) => {
+    console.log("handleConfirmDelete", chapterId);
+    const data: ModalData = {
+      onConfirm: async () => {
+        console.log("onSubmitted", chapterId);
+        setIsSubmitting(true);
+        try {
+          await chapterApi.deleteChapter(chapterId);
+          router.push(`/story/${storyId}/chapters`);
+        } catch (error) {
+          console.error("deleteChapter", error);
+        } finally {
+          setIsSubmitting(false);
+          closeModal();
+        }
+      },
+    };
+    openModal("delete-chapter", data);
+  };
+
   if (!detail || isLoading) {
     return <Loader />;
   }
@@ -120,7 +161,7 @@ const ChapterEdit = () => {
         <BreadcrumbItem pageName="Chỉnh sửa chương" path="#" />
       </BreadCrumb>
       <DetailForm>
-        <CollapsibleCard title="Thông tin truyện" defaultOpen={false}>
+        <CollapsibleCard title="Thông tin chương" defaultOpen={false}>
           <div className="space-y-4">
             <InputDetail
               label="Tên truyện"
@@ -255,6 +296,20 @@ const ChapterEdit = () => {
             isLoading={isSubmitting}
           >
             Lưu
+          </FooterButton>
+          <FooterButton
+            type="outline"
+            onClick={() => handleConfirmCrawl(chapterId as string)}
+            isLoading={isSubmitting}
+          >
+            Thực hiện lấy dữ liệu
+          </FooterButton>
+          <FooterButton
+            type="black"
+            onClick={() => handleConfirmDelete(chapterId as string)}
+            isLoading={isSubmitting}
+          >
+            Xóa
           </FooterButton>
         </FooterButtons>
       </Footer>

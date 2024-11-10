@@ -5,9 +5,14 @@ import { useDeferredValue } from "react";
 import ModalSendSms from "./components/ModalSendSms";
 import { CategoryItem } from "@/types/category";
 import ModalCategoryDetail from "./components/ModalCategoryDetail";
-import ModalConfirm from "./components/ModalConfirm";
+import ModalCrawlChapter from "./components/ModalCrawlChapter";
+import ModalDeleteChapter from "./components/ModalDeleteChapter";
 
-type modal = "send-sms" | "category-detail" | "confirm";
+type modal =
+  | "send-sms"
+  | "category-detail"
+  | "crawl-chapter"
+  | "delete-chapter";
 
 export interface ModalData {
   phone?: string;
@@ -15,9 +20,9 @@ export interface ModalData {
   onSubmitted?: (phone: string, content: string) => void;
   more?: string;
   categoryData?: CategoryItem;
-  title: string;
-  contentConfirm: string;
-  onConfirm?: (data?: any) => void;
+  title?: string;
+  contentConfirm?: string;
+  onConfirm?: () => void;
 }
 
 export const store = create<{
@@ -38,7 +43,8 @@ export default function ModalUI() {
     <>
       {modalType == "send-sms" && <ModalSendSms {...items} />}
       {modalType == "category-detail" && <ModalCategoryDetail {...items} />}
-      {modalType == "confirm" && <ModalConfirm {...items} />}
+      {modalType == "crawl-chapter" && <ModalCrawlChapter {...items} />}
+      {modalType == "delete-chapter" && <ModalDeleteChapter {...items} />}
     </>
   );
 }

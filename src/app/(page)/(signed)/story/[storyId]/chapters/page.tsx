@@ -26,6 +26,7 @@ import { chapterApi } from "@apiClient/chapter-api";
 import DetailForm from "@/components/commons/Form/DetailForm";
 import TableList from "@/components/ui/Tables/useTable";
 import { TableChapter } from "./TableChapter";
+import { closeModal, ModalData, openModal } from "@/components/ui/Modal";
 
 const fetcher = async (id: string) => {
   const response = await storyApi.getDetail(id);
@@ -127,26 +128,44 @@ const ChaptersPage = () => {
     handleSubmit((data) => fetchData(data, 1, newPageSize))();
   };
 
-  const handleReCrawl = async (chapterId: string) => {
-    try {
-      const response = await chapterApi.reCrawlChapter(chapterId);
-      if (response) {
-        console.log("Re-crawl success");
-      }
-    } catch (error) {
-      console.error("Re-crawl error:", error);
-    }
+  const handleReCrawl = (chapterId: string) => {
+    console.log("handleConfirmCrawl", chapterId);
+    const data: ModalData = {
+      onConfirm: async () => {
+        console.log("onSubmitted", chapterId);
+        setIsSubmitting(true);
+        try {
+          await chapterApi.reCrawlChapter(chapterId);
+          handleSubmit((data) => fetchData(data, 1, pageSize))();
+        } catch (error) {
+          console.error("reCrawlChapter", error);
+        } finally {
+          setIsSubmitting(false);
+          closeModal();
+        }
+      },
+    };
+    openModal("crawl-chapter", data);
   };
 
-  const handleDeleteChapter = async (chapterId: string) => {
-    try {
-      const response = await chapterApi.deleteChapter(chapterId);
-      if (response) {
-        console.log("Delete success");
-      }
-    } catch (error) {
-      console.error("Delete error:", error);
-    }
+  const handleDelete = (chapterId: string) => {
+    console.log("handleConfirmDelete", chapterId);
+    const data: ModalData = {
+      onConfirm: async () => {
+        console.log("onSubmitted", chapterId);
+        setIsSubmitting(true);
+        try {
+          await chapterApi.deleteChapter(chapterId);
+          handleSubmit((data) => fetchData(data, 1, pageSize))();
+        } catch (error) {
+          console.error("deleteChapter", error);
+        } finally {
+          setIsSubmitting(false);
+          closeModal();
+        }
+      },
+    };
+    openModal("delete-chapter", data);
   };
 
   if (!detail || isLoading) {
@@ -224,7 +243,7 @@ const ChaptersPage = () => {
           onChangePage={handleOnChangePage}
           onChangeRowsPerPage={handleOnChangeRowsPerPage}
           handleReCrawl={handleReCrawl}
-          handleDeleteChapter={handleDeleteChapter}
+          handleDelete={handleDelete}
         />
       </TableList>
     </>

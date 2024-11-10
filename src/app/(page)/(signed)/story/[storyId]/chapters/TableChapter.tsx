@@ -4,7 +4,7 @@ import { formatDateTime } from "@utils/dateUtils";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { TableColumn } from "react-data-table-component";
-import { HiCollection, HiEye, HiPencilAlt } from "react-icons/hi";
+import { HiEye, HiPencilAlt, HiRefresh, HiTrash } from "react-icons/hi";
 
 export interface TableChapterProps {
   currentPage: number;
@@ -15,7 +15,7 @@ export interface TableChapterProps {
   onChangePage: (page: number) => void;
   onChangeRowsPerPage: (newPageSize: number) => void;
   handleReCrawl: (chapterId: string) => void;
-  handleDeleteChapter: (chapterId: string) => void;
+  handleDelete: (chapterId: string) => void;
 }
 
 export function TableChapter({
@@ -27,6 +27,7 @@ export function TableChapter({
   onChangePage,
   onChangeRowsPerPage,
   handleReCrawl,
+  handleDelete,
 }: TableChapterProps) {
   const router = useRouter();
   const columns: TableColumn<ChapterData>[] = [
@@ -92,48 +93,48 @@ export function TableChapter({
       cell: (row: ChapterData) => (
         <div className="border-gray-5 alight-center flex w-full justify-center gap-2 border-l-2 pl-2">
           <button
-            onClick={() => handleViewDetails(row.chapterIdStr, row.storyIdStr)}
+            onClick={() => {
+              router.push(
+                `/story/${row.storyIdStr}/chapters/${row.chapterIdStr}`
+              );
+            }}
             className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
             title="Xem chi tiết"
           >
             <HiEye className="h-4 w-4" />
           </button>
           <button
-            onClick={() => handleEdit(row.chapterIdStr)}
+            onClick={() => {
+              router.push(
+                `/story/${row.storyIdStr}/chapters/edit/${row.chapterIdStr}`
+              );
+            }}
             className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
             title="Chỉnh sửa"
           >
             <HiPencilAlt className="h-4 w-4" />
           </button>
           <button
-            onClick={() => handleCrawlChapter(row.chapterIdStr)}
+            onClick={() => handleReCrawl(row.chapterIdStr)}
             className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
             title="Crawl chương"
           >
-            <HiCollection className="h-4 w-4" />
+            <HiRefresh className="h-4 w-4" />
+          </button>
+          <button
+            onClick={() => handleDelete(row.chapterIdStr)}
+            className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
+            title="Xóa chương"
+          >
+            <HiTrash className="h-4 w-4" />
           </button>
         </div>
       ),
-      width: "150px",
+      width: "170px",
       style: { textAlign: "center" },
       center: true,
     },
   ];
-
-  const handleViewDetails = (id: string, storyId: string) => {
-    console.log("handleViewDetails", id);
-    router.push(`/story/${storyId}/chapters/${id}`);
-  };
-
-  const handleEdit = (id: string) => {
-    console.log("handleEdit", id);
-    router.push(`/story/edit/${id}`);
-  };
-
-  const handleCrawlChapter = (id: string) => {
-    console.log("handleViewChapters", id);
-    handleReCrawl(id);
-  };
 
   return (
     <React.Fragment>
