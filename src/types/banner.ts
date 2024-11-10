@@ -17,20 +17,21 @@ export interface GetBannerListResponse extends BaseResponse {
 
 export interface BannerData {
   bannerId: number;
+  bannerIdStr: string;
   bannerName: string;
-  bannerType: "IMAGE" | "HTML"; // Loại banner có thể là "IMAGE" hoặc "HTML"
+  bannerType: "IMAGE" | "HTML";
   bannerDesc: string;
   status: string;
-  createdDate: string; // ISO 8601 date string
-  createdBy?: string; // Optional vì có thể rỗng
-  modifiedDate?: string | null; // Có thể null hoặc không có
-  modifieddBy?: string | null; // Có thể null hoặc không có
-  bannerPos?: string; // Optional
+  createdDate: string;
+  createdBy?: string;
+  modifiedDate?: string | null;
+  modifieddBy?: string | null;
+  bannerPos?: string;
   bannerPage: string;
   bannerUrl: string;
   bannerLinkTo: string;
-  bannerOpenType: "_self" | "_blank" | "_parent" | "_top"; // Các giá trị được quy định
-  bannerHTML?: string; // Optional vì có thể rỗng
+  bannerOpenType: "_self" | "_blank" | "_parent" | "_top";
+  bannerHTML?: string;
 }
 
 export interface GetBannerDetailResponse {
@@ -39,15 +40,15 @@ export interface GetBannerDetailResponse {
 
 export interface AddBannerRequest {
   bannerName: string;
-  bannerType: "IMAGE" | "HTML"; // Loại banner có thể là "IMAGE" hoặc "HTML"
+  bannerType: "IMAGE" | "HTML";
   bannerDesc: string;
   status: string;
-  bannerPos?: string; // Optional
+  bannerPos?: string;
   bannerPage: string;
   bannerUrl: string;
   bannerLinkTo: string;
-  bannerOpenType: "_self" | "_blank" | "_parent" | "_top"; // Các giá trị được quy định
-  bannerHTML?: string; // Optional vì có thể rỗng
+  bannerOpenType: "_self" | "_blank" | "_parent" | "_top";
+  bannerHTML?: string;
 }
 
 export interface AddBannerResponse extends BaseResponse {
@@ -55,17 +56,17 @@ export interface AddBannerResponse extends BaseResponse {
 }
 
 export interface UpdateBannerRequest {
-  bannerId: number;
+  bannerId: string;
   bannerName: string;
-  bannerType: "IMAGE" | "HTML"; // Loại banner có thể là "IMAGE" hoặc "HTML"
+  bannerType: "IMAGE" | "HTML";
   bannerDesc: string;
   status: string;
-  bannerPos?: string; // Optional
+  bannerPos?: string;
   bannerPage: string;
   bannerUrl: string;
   bannerLinkTo: string;
-  bannerOpenType: "_self" | "_blank" | "_parent" | "_top"; // Các giá trị được quy định
-  bannerHTML?: string; // Optional vì có thể rỗng
+  bannerOpenType: "_self" | "_blank" | "_parent" | "_top";
+  bannerHTML?: string;
 }
 
 export interface UpdateBannerResponse extends BaseResponse {

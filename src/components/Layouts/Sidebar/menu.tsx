@@ -35,6 +35,11 @@ export const menuGroups: Array<{
         label: "Category",
         route: "/category",
       },
+      {
+        icon: <IconCategory />,
+        label: "Banner",
+        route: "/banner",
+      },
     ],
   },
 ];

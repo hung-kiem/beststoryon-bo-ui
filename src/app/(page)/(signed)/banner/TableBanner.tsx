@@ -1,23 +1,22 @@
-import { CategoryItem } from "@/types/category";
-import * as React from "react";
+import React from "react";
 import { TableColumn } from "react-data-table-component";
 import { HiEye, HiPencilAlt } from "react-icons/hi";
 import TableThree from "@/components/ui/Tables/TableThree";
 import { useRouter } from "next/navigation";
-import { openModal } from "@/components/ui/Modal";
 import { formatDateTime } from "../../../../../utils/dateUtils";
+import { BannerData } from "@/types/banner";
 
-export interface ITableCategoryProps {
+export interface TableBannerProps {
   currentPage: number;
   pageSize: number;
   totalCount: number;
   loading: boolean;
-  data: CategoryItem[];
+  data: BannerData[];
   onChangePage: (page: number) => void;
   onChangeRowsPerPage: (newPageSize: number) => void;
 }
 
-export function TableCategory({
+export function TableBanner({
   currentPage,
   pageSize,
   totalCount,
@@ -25,27 +24,27 @@ export function TableCategory({
   loading,
   onChangePage,
   onChangeRowsPerPage,
-}: ITableCategoryProps) {
+}: TableBannerProps) {
   const router = useRouter();
-  const columns: TableColumn<CategoryItem>[] = [
+  const columns: TableColumn<BannerData>[] = [
     {
       name: "STT",
-      cell: (row: CategoryItem, index: number) =>
-        (currentPage - 1) * pageSize + index + 1,
+      cell: (_, index: number) => (currentPage - 1) * pageSize + index + 1,
       width: "60px",
     },
     {
-      name: "Tên danh mục",
-      selector: (row: CategoryItem) => row.catName,
+      name: "Tên banner",
+      selector: (row: BannerData) => row.bannerName || "",
     },
     {
-      name: "Mã danh mục",
-      selector: (row: CategoryItem) => row.catCode,
+      name: "Banner page",
+      selector: (row: BannerData) => row.bannerPage || "",
+      center: true,
     },
     {
       name: "Trạng thái",
-      selector: (row: CategoryItem) => row.status,
-      cell: (row: CategoryItem) => (
+      selector: (row: BannerData) => row.status,
+      cell: (row: BannerData) => (
         <p
           className={`!text-xxs font-regular inline-flex rounded-full bg-opacity-10 px-3 py-1 ${
             row.status === "1"
@@ -58,20 +57,30 @@ export function TableCategory({
           {row.status === "1" ? "Hoạt động" : "Khóa"}
         </p>
       ),
+      center: true,
     },
     {
-      name: "Website gốc",
-      selector: (row: CategoryItem) => row.originSite,
+      name: "Vị trí banner",
+      selector: (row: BannerData) => row.bannerPos || "",
+      center: true,
     },
     {
-      name: "Thứ tự",
-      selector: (row: CategoryItem) => row.displayOrder,
+      name: "Ảnh",
+      cell: (row: BannerData) =>
+        row.bannerUrl ? (
+          <img
+            src={row.bannerUrl}
+            alt="Banner"
+            className="object-cover rounded"
+            style={{ width: "100px", height: "60px" }}
+          />
+        ) : null,
       center: true,
       style: { textAlign: "center" },
     },
     {
       name: "Ngày tạo",
-      selector: (row: CategoryItem) =>
+      selector: (row: BannerData) =>
         row.createdDate ? formatDateTime(row.createdDate) : "",
       center: true,
       style: { textAlign: "center" },
@@ -79,17 +88,17 @@ export function TableCategory({
     },
     {
       name: "Chức năng",
-      cell: (row: CategoryItem) => (
+      cell: (row: BannerData) => (
         <div className="border-gray-5 alight-center flex w-full justify-center gap-2 border-l-2 pl-2">
           <button
-            onClick={() => handleViewDetails(row.catId)}
+            onClick={() => handleViewDetails(row.bannerId.toString())}
             className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
             title="Xem chi tiết"
           >
             <HiEye className="h-4 w-4" />
           </button>
           <button
-            onClick={() => handleEdit(row.catId)}
+            onClick={() => handleEdit(row.bannerId.toString())}
             className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
             title="Chỉnh sửa"
           >
@@ -104,11 +113,11 @@ export function TableCategory({
   ];
 
   const handleViewDetails = (id: string) => {
-    router.push(`/category/${id}`);
+    router.push(`/banner/${id}`);
   };
 
   const handleEdit = (id: string) => {
-    router.push(`/category/edit/${id}`);
+    router.push(`/banner/edit/${id}`);
   };
 
   return (

@@ -3,9 +3,7 @@
 import Loader from "@/components/commons/Loader";
 import BreadCrumb from "@/components/ui/Breadcrumb/Breadcrumb";
 import BreadcrumbItem from "@/components/ui/Breadcrumb/BreadcrumbItem";
-import Button from "@/components/ui/Buttons/Button";
 import InputDetail from "@/components/ui/Input/InputDetail";
-import { openModal } from "@/components/ui/Modal";
 import { chapterApi } from "@apiClient/chapter-api";
 import { formatDateTime } from "@utils/dateUtils";
 import { useParams } from "next/navigation";
@@ -31,23 +29,6 @@ const ChapterDetail = () => {
   if (!detail || isLoading) {
     return <Loader />;
   }
-
-  const handleReCrawl = async (id: string) => {
-    try {
-      await chapterApi.reCrawlChapter(id);
-    } catch (error) {
-      console.error("handleReCrawl error:", error);
-    }
-  };
-
-  const handleDeleteChapter = async (id: string) => {
-    const payload = {
-      title: "Xác nhận",
-      content: "Bạn có chắc chắn muốn xóa chương này?",
-      contentConfirm: "Xác nhận xóa chương này",
-    };
-    openModal("confirm", payload);
-  };
 
   return (
     <>
@@ -149,20 +130,6 @@ const ChapterDetail = () => {
             Link gốc:
           </label>
           <div className={`text-sm`}>{detail?.data?.urlOriginCrawl || ""}</div>
-        </div>
-        <div className="flex items-center justify-center gap-4">
-          <Button
-            type="outline"
-            onClick={() => handleReCrawl((chapterId as string) || "")}
-          >
-            Lấy lại dữ liệu nguồn
-          </Button>
-          <Button
-            type="outline"
-            onClick={() => handleReCrawl((chapterId as string) || "")}
-          >
-            Xóa
-          </Button>
         </div>
       </div>
     </>

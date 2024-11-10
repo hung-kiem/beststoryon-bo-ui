@@ -5,14 +5,14 @@ type InputDetailProps = {
   label: string;
   value: React.ReactNode;
   color?: "red" | "blue" | "normal";
-  isBold?: boolean; // Thuộc tính mới để quyết định in đậm
+  isBold?: boolean;
 };
 
 const InputDetail: React.FC<InputDetailProps> = ({
   label,
   value,
   color = "normal",
-  isBold = true, // Mặc định là in đậm
+  isBold = true,
 }) => {
   let valueClassName = "text-black dark:text-white";
   if (color === "red") {
@@ -21,7 +21,6 @@ const InputDetail: React.FC<InputDetailProps> = ({
     valueClassName = "text-blue-600 dark:text-blue-400";
   }
 
-  // Thêm hoặc xóa lớp font-semibold dựa trên giá trị isBold
   const finalValueClassName = isBold
     ? `${valueClassName} font-semibold`
     : valueClassName;
