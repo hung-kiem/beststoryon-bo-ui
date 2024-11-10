@@ -6,7 +6,7 @@ interface InputProps {
   layout?: "vertical" | "horizontal";
   placeholder?: string;
   className?: string;
-  type?: "text" | "number" | "email" | "tel";
+  type?: "text" | "number" | "email" | "tel" | "password";
   value?: string | number;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isReadOnly?: boolean;

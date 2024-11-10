@@ -40,6 +40,11 @@ export const menuGroups: Array<{
         label: "Banner",
         route: "/banner",
       },
+      {
+        icon: <IconCategory />,
+        label: "User",
+        route: "/user",
+      },
     ],
   },
 ];
