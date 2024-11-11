@@ -38,8 +38,6 @@ interface FormData {
   urlAvatar: string;
   urlOriginCrawl: string;
   viewNumber: number;
-  published: string;
-  publishedDate: string;
   displayOrder: number;
 }
 
@@ -51,11 +49,6 @@ const fetcher = async (id: string) => {
 const storyStatusOptions = [
   { label: "Đang phát hành", value: "Ongoing" },
   { label: "Đã kết thúc", value: "Completed" },
-];
-
-const storyPublishOptions = [
-  { label: "Đang phát hành", value: "1" },
-  { label: "Chưa phát hành", value: "0" },
 ];
 
 const statusOptions = [
@@ -93,8 +86,6 @@ const StoryDetailPage = () => {
       urlAvatar: "",
       urlOriginCrawl: "",
       viewNumber: 0,
-      published: "",
-      publishedDate: "",
       displayOrder: 0,
     },
   });
@@ -115,10 +106,6 @@ const StoryDetailPage = () => {
         urlAvatar: detail.urlAvatar || "",
         urlOriginCrawl: detail.urlOriginCrawl || "",
         viewNumber: detail.viewNumber || 0,
-        published: detail.published || "",
-        publishedDate: detail.publishedDate
-          ? convertDateFormat(detail.publishedDate)
-          : "",
         displayOrder: detail.displayOrder || 0,
       });
     }
@@ -133,7 +120,6 @@ const StoryDetailPage = () => {
         isTopFocus: formData.isTopFocus,
         viewNumber: formData.viewNumber,
         likeCount: formData.likeCount,
-        published: formData.published,
         storyName: formData.storyName,
         displayOrder: formData.displayOrder,
       };
@@ -309,19 +295,6 @@ const StoryDetailPage = () => {
               options={storyStatusOptions}
               value={watch("storyStatus")}
               onSelect={(value) => setValue("storyStatus", value)}
-            />
-          )}
-        />
-        <Controller
-          name="published"
-          control={control}
-          render={() => (
-            <Select
-              title="Trạng thái phát hành"
-              label="Trạng thái phát hành"
-              options={storyPublishOptions}
-              value={watch("published")}
-              onSelect={(value) => setValue("published", value)}
             />
           )}
         />

@@ -65,10 +65,7 @@ const StoryDetailPage = () => {
               value={detail.storyStatus || ""}
             />
             <InputDetail label="Lượt xem" value={detail.viewNumber || ""} />
-            <InputDetail
-              label="Thứ tự hiển thị"
-              value={detail.displayOrder || ""}
-            />
+
             <div className="flex items-center gap-4">
               {/* Thêm lớp whitespace-nowrap để ngăn nhãn xuống dòng */}
               <label className="basis-1/3 text-sm text-neutral-600 dark:text-white whitespace-nowrap">
@@ -113,8 +110,8 @@ const StoryDetailPage = () => {
             />
             <InputDetail label="Danh mục" value={detail.catCodeRef || ""} />
             <InputDetail
-              label="Ngày phát hành"
-              value={convertDateFormat(detail.publishedDate) || ""}
+              label="Thứ tự hiển thị"
+              value={detail.displayOrder || ""}
             />
           </div>
         </div>

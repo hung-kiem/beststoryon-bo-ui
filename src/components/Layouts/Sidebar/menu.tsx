@@ -26,11 +26,6 @@ export const menuGroups: Array<{
         route: "/story",
       },
       {
-        icon: <IconChapter />,
-        label: "Chapter",
-        route: "/chapter",
-      },
-      {
         icon: <IconCategory />,
         label: "Category",
         route: "/category",

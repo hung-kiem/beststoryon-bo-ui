@@ -97,7 +97,6 @@ export interface UpdateStoryRequest {
   likeCount: number;
   isHot: string;
   isTopFocus: string;
-  published: string;
   storyName: string;
   displayOrder: number;
 }
