@@ -1,10 +1,8 @@
 import IconBook from "@/components/ui/icons/IconBook";
 import IconCategory from "@/components/ui/icons/IconCategory";
-import IconChapter from "@/components/ui/icons/IconChapter";
-import IconDashboard from "@/components/ui/icons/IconDashboard";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
-interface MenuItems {
+export interface MenuItems {
   icon?: ReactNode;
   label: string;
   route?: string;

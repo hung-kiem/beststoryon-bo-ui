@@ -14,7 +14,6 @@ import Input from "@/components/ui/Input/Input";
 import InputDetail from "@/components/ui/Input/InputDetail";
 import { closeModal, ModalData, openModal } from "@/components/ui/Modal";
 import Select from "@/components/ui/Select/Select";
-import { BaseResponse } from "@/types/baseResponse";
 import { UpdateChapterRequest } from "@/types/chapter";
 import { chapterApi } from "@apiClient/chapter-api";
 import { formatDateTime } from "@utils/dateUtils";

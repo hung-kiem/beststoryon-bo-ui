@@ -4,8 +4,7 @@ import { TableColumn } from "react-data-table-component";
 import { HiEye, HiPencilAlt } from "react-icons/hi";
 import TableThree from "@/components/ui/Tables/TableThree";
 import { useRouter } from "next/navigation";
-import { openModal } from "@/components/ui/Modal";
-import { formatDateTime } from "../../../../../utils/dateUtils";
+import { formatDateTime } from "@utils/dateUtils";
 
 export interface ITableCategoryProps {
   currentPage: number;

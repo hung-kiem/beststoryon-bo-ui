@@ -1,3 +1,4 @@
+import React from "react";
 import classNames from "classnames";
 
 export default function Loader({ partial }: { partial?: boolean }) {

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import React from "react";
 import IconLightMode from "@/components/ui/icons/IconLightMode";
 import IconDarkMode from "@/components/ui/icons/IconDarkMode";
 import useColorMode from "@hooks/useColorMode";

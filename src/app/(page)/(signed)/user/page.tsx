@@ -16,7 +16,7 @@ import {
   UserData,
 } from "@/types/user";
 import { userApi } from "@apiClient/user-api";
-import React, { useState, useCallback, useEffect, use } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { TableUser } from "./TableUser";
 import { closeModal, ModalData, openModal } from "@/components/ui/Modal";

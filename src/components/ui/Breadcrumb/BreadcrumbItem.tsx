@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
-import * as React from "react";
+import React from "react";
 
 export interface BreadcrumbItemProps {
   pageName: string;

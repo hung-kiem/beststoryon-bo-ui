@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 function AvatarCanvas({ name }: { name: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);

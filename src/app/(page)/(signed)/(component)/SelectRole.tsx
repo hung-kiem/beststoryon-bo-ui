@@ -26,10 +26,12 @@ const SelectRole: React.FC<SelectRoleProps> = ({ onChange, defaultValue }) => {
       const allOption = { value: "", label: "Tất cả" };
       const options = [
         allOption,
-        ...data?.data?.map((role: RoleOptions) => ({
-          value: role.roleId.toString(),
-          label: role.roleName,
-        })),
+        ...(data?.data
+          ? data.data.map((role: RoleOptions) => ({
+              value: role.roleId.toString(),
+              label: role.roleName,
+            }))
+          : []),
       ];
       setRoleOption(options);
     }

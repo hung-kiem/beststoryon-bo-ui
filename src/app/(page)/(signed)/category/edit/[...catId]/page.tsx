@@ -123,7 +123,7 @@ const EditCategory = () => {
         <Controller
           name="catCode"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Input
               label="Mã danh mục"
               layout="vertical"
@@ -138,7 +138,7 @@ const EditCategory = () => {
         <Controller
           name="catName"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Input
               label="Tên danh mục"
               layout="vertical"
@@ -153,7 +153,7 @@ const EditCategory = () => {
         <Controller
           name="status"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Select
               title="Trạng thái"
               label="Trạng thái"
@@ -166,7 +166,7 @@ const EditCategory = () => {
         <Controller
           name="displayOrder"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Input
               label="Thứ tự hiển thị"
               layout="vertical"
@@ -181,7 +181,7 @@ const EditCategory = () => {
         <Controller
           name="originSite"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Input
               label="Link gốc"
               layout="vertical"

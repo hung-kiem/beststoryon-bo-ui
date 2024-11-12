@@ -1,12 +1,10 @@
-import { CategoryItem } from "@/types/category";
 import * as React from "react";
 import { TableColumn } from "react-data-table-component";
 import { HiEye, HiPencilAlt, HiTrash } from "react-icons/hi";
 import TableThree from "@/components/ui/Tables/TableThree";
 import { useRouter } from "next/navigation";
-import { openModal } from "@/components/ui/Modal";
-import { formatDateTime } from "../../../../../utils/dateUtils";
 import { UserData } from "@/types/user";
+import { formatDateTime } from "@utils/dateUtils";
 
 export interface TableUserProps {
   currentPage: number;

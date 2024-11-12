@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import { useEffect, ReactNode } from "react";
+import React, { useEffect, ReactNode } from "react";
 
 const detailForm = create<{ detailForms?: ReactNode }>(() => ({}));
 const useDetailForm = () => {

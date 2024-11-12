@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import DarkModeSwitcher from "./DarkModeSwitcher";
 import useSidebar from "@hooks/useSidebar";
 import DropdownUser from "./DropdownUser";

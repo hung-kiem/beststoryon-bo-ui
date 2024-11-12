@@ -1,3 +1,4 @@
+import React from "react";
 import useColorMode from "@hooks/useColorMode";
 import IconLightMode from "@/components/ui/icons/IconLightMode";
 import IconDarkMode from "@/components/ui/icons/IconDarkMode";

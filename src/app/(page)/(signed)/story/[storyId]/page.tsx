@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 import useSWR from "swr";
 import Loader from "@/components/commons/Loader";
 import InputDetail from "@/components/ui/Input/InputDetail";
-import { convertDateFormat, formatDateTime } from "@utils/dateUtils";
+import { formatDateTime } from "@utils/dateUtils";
 
 const fetcher = async (id: string) => {
   const response = await storyApi.getDetail(id);

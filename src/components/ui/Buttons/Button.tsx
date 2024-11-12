@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FC, ReactNode } from "react";
+import React, { FC, ReactNode } from "react";
 import classNames from "classnames";
 
 interface ButtonProps {

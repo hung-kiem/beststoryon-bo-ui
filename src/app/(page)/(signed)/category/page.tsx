@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import BreadcrumbItem from "@/components/ui/Breadcrumb/BreadcrumbItem";
 import { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -129,7 +130,7 @@ const Category = () => {
         <Controller
           name="status"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <Select
               title="Trạng thái"
               label="Trạng thái"

@@ -1,20 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 
-function extendTokenExpiry(response: NextResponse, token: string) {
-  response.cookies.set("accessToken", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: process.env.TOKEN_EXPIRATION
-      ? parseInt(process.env.TOKEN_EXPIRATION, 10)
-      : 15 * 60,
-  });
-}
+// function extendTokenExpiry(response: NextResponse, token: string) {
+//   response.cookies.set("accessToken", token, {
+//     httpOnly: true,
+//     secure: process.env.NODE_ENV === "production",
+//     path: "/",
+//     maxAge: process.env.TOKEN_EXPIRATION
+//       ? parseInt(process.env.TOKEN_EXPIRATION, 10)
+//       : 15 * 60,
+//   });
+// }
 
 async function handleRequest(req: NextRequest, method: "GET" | "POST") {
   try {
-    const cookies = req.cookies;
-    const accessToken = cookies.get("accessToken");
+    // const cookies = req.cookies;
+    // const accessToken = cookies.get("accessToken");
     // if (!accessToken) {
     //   return NextResponse.json({ message: "Login failed" }, { status: 401 });
     // }

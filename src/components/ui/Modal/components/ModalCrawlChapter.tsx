@@ -1,6 +1,7 @@
 import Modal from "@/components/ui/Modal/Modal";
 import { closeModal, ModalData } from "@/components/ui/Modal";
 import Button from "../../Buttons/Button";
+import React from "react";
 
 export default function ModalCrawlChapter({ onConfirm }: ModalData) {
   return (

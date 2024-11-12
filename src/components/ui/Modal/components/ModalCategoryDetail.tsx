@@ -1,7 +1,7 @@
+import React from "react";
 import Modal from "@/components/ui/Modal/Modal";
-import { closeModal, ModalData } from "@/components/ui/Modal";
-import Button from "../../Buttons/Button";
 import InputDetail from "../../Input/InputDetail";
+import { ModalData } from "..";
 
 export default function ModalCategoryDetail({ categoryData }: ModalData) {
   return (

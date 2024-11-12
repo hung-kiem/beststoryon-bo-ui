@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import { useEffect, ReactNode } from "react";
+import React, { useEffect, ReactNode } from "react";
 
 const table = create<{ table?: ReactNode }>(() => ({}));
 const useTable = () => {

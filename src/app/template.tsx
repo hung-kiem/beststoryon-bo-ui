@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import Loader from "@/components/commons/Loader";
 
 export default function Template({ children }: { children: ReactNode }) {

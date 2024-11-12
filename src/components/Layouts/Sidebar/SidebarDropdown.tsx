@@ -1,12 +1,14 @@
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
+import { MenuItems } from "./menu";
 
 function SidebarDropdown({
   item,
   isSidebarCollapsed,
 }: {
-  item: any;
+  item: MenuItems[];
   isSidebarCollapsed: boolean;
 }) {
   const pathname = usePathname();
@@ -22,10 +24,10 @@ function SidebarDropdown({
           }
         )}
       >
-        {item.map((menuItem: any, index: number) => (
+        {item.map((menuItem: MenuItems, index: number) => (
           <li key={index}>
             <Link
-              href={menuItem.route}
+              href={menuItem.route || "#"}
               className={classNames(
                 "group relative flex items-center gap-2.5 whitespace-nowrap rounded-md px-4 text-xs",
                 "font-medium text-black duration-300 ease-in-out hover:!text-secondary dark:text-white",
@@ -47,23 +49,25 @@ function SidebarDropdown({
                   "pl-6": !isSidebarCollapsed,
                 })}
               >
-                {menuItem.children.map((subItem: any, subIndex: number) => (
-                  <li key={subIndex}>
-                    <Link
-                      href={subItem.route}
-                      className={classNames(
-                        "group relative flex items-center gap-2.5 whitespace-nowrap rounded-md px-4 text-xs",
-                        "font-medium text-black duration-300 ease-in-out hover:!text-secondary dark:text-white",
-                        {
-                          "!text-secondary dark:!text-secondary":
-                            pathname == subItem.route,
-                        }
-                      )}
-                    >
-                      {subItem.label}
-                    </Link>
-                  </li>
-                ))}
+                {menuItem.children.map(
+                  (subItem: MenuItems, subIndex: number) => (
+                    <li key={subIndex}>
+                      <Link
+                        href={subItem.route || "#"}
+                        className={classNames(
+                          "group relative flex items-center gap-2.5 whitespace-nowrap rounded-md px-4 text-xs",
+                          "font-medium text-black duration-300 ease-in-out hover:!text-secondary dark:text-white",
+                          {
+                            "!text-secondary dark:!text-secondary":
+                              pathname == subItem.route,
+                          }
+                        )}
+                      >
+                        {subItem.label}
+                      </Link>
+                    </li>
+                  )
+                )}
               </ul>
             )}
           </li>

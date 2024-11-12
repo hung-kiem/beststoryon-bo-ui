@@ -56,7 +56,9 @@ const Sidebar = () => {
               .filter(
                 (group) =>
                   !group.modes ||
-                  group.modes.includes(process.env.NODE_ENV as any)
+                  group.modes.includes(
+                    process.env.NODE_ENV as "development" | "production"
+                  )
               )
               .map((group, groupIndex) => (
                 <div key={groupIndex}>

@@ -2,8 +2,8 @@ import Link from "next/link";
 import SidebarDropdown from "@/components/Layouts/Sidebar/SidebarDropdown";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
-
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
+import { MenuItems } from "./menu";
 
 function SidebarWrapper({
   children,
@@ -16,7 +16,7 @@ function SidebarWrapper({
   pageName: string;
   setPageName: (pageName: string) => void;
   isSidebarCollapsed: boolean;
-  item: any;
+  item: MenuItems;
 }) {
   const handleClick = () => {
     const updatedPageName =
@@ -26,10 +26,10 @@ function SidebarWrapper({
 
   const pathname = usePathname();
 
-  const isActive = (item: any) => {
+  const isActive = (item: MenuItems): boolean => {
     if (item.route === pathname) return true;
     if (item.children) {
-      return item.children.some((child: any) => isActive(child));
+      return item.children.some((child: MenuItems) => isActive(child));
     }
     return false;
   };
@@ -80,7 +80,12 @@ const SidebarItem = ({
   pageName,
   setPageName,
   isSidebarCollapsed,
-}: any) => {
+}: {
+  item: MenuItems;
+  pageName: string;
+  setPageName: (pageName: string) => void;
+  isSidebarCollapsed: boolean;
+}) => {
   return (
     <>
       <li className="group relative">

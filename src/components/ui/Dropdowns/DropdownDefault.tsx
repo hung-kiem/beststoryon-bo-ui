@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import IconEdit from "@/components/ui/icons/IconEdit";
 import IconTrash from "@/components/ui/icons/IconTrash";
 import IconThreeDot from "@/components/ui/icons/IconThreeDot";
@@ -7,14 +7,17 @@ import IconThreeDot from "@/components/ui/icons/IconThreeDot";
 const DropdownDefault = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const trigger = useRef<any>(null);
-  const dropdown = useRef<any>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const dropdown = useRef<HTMLDivElement>(null);
 
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!dropdown.current) return;
-      if (dropdown.current.contains(target) || trigger.current.contains(target))
+      if (
+        dropdown.current.contains(target as Node) ||
+        (trigger.current && trigger.current.contains(target as Node))
+      )
         return;
       setDropdownOpen(false);
     };

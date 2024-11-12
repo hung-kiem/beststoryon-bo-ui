@@ -10,12 +10,10 @@ import BreadcrumbItem from "@/components/ui/Breadcrumb/BreadcrumbItem";
 import Input from "@/components/ui/Input/Input";
 import Select from "@/components/ui/Select/Select";
 import { AddUserRequest, AddUserResponse } from "@/types/user";
-import { roleApi } from "@apiClient/role-api";
 import { userApi } from "@apiClient/user-api";
 import { useRouter } from "next/navigation";
 import React, { useState, useCallback } from "react";
 import { Controller, useForm } from "react-hook-form";
-import useSWR from "swr";
 import SelectRole from "../../(component)/SelectRole";
 
 interface FormData {
@@ -30,11 +28,6 @@ const statusOptions = [
   { label: "Hoạt động", value: "1" },
   { label: "Không hoạt động", value: "0" },
 ];
-
-const fetcher = async () => {
-  const response = await roleApi.getRoles();
-  return response;
-};
 
 const CreateUserPage = () => {
   const router = useRouter();

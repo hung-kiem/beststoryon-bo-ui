@@ -7,9 +7,6 @@ import useSWR from "swr";
 import Loader from "@/components/commons/Loader";
 import BreadCrumb from "@/components/ui/Breadcrumb/Breadcrumb";
 import BreadcrumbItem from "@/components/ui/Breadcrumb/BreadcrumbItem";
-import Input from "@/components/ui/Input/Input";
-import Select from "@/components/ui/Select/Select";
-import DetailForm from "@/components/commons/Form/DetailForm";
 import InputDetail from "@/components/ui/Input/InputDetail";
 import { formatDateTime } from "../../../../../../utils/dateUtils";
 
@@ -17,11 +14,6 @@ const fetcher = async (id: string) => {
   const response = await categoryApi.getDetail(id);
   return response;
 };
-
-const statusOptions = [
-  { label: "Hoạt động", value: "1" },
-  { label: "Không hoạt động", value: "0" },
-];
 
 const CategoryDetail = () => {
   const params = useParams();

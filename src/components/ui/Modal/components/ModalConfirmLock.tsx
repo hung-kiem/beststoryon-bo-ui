@@ -1,6 +1,7 @@
 import Modal from "@/components/ui/Modal/Modal";
 import { closeModal } from "@/components/ui/Modal";
 import Input from "@/components/ui/Input/Input";
+import React from "react";
 import Button from "../../Buttons/Button";
 
 export default function ModalConfirmLock() {

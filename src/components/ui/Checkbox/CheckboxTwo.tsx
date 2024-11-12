@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import IconChecked from "../icons/IconChecked";
 
 interface CheckboxTwoProps {

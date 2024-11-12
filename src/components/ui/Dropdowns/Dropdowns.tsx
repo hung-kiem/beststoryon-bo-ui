@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import classNames from "classnames";
 import IconThreeDot from "@/components/ui/icons/IconThreeDot";
@@ -12,14 +12,17 @@ interface DropdownsProps {
 export default function Dropdowns({ children, label }: DropdownsProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const trigger = useRef<any>(null);
-  const dropdown = useRef<any>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const dropdown = useRef<HTMLDivElement>(null);
 
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!dropdown.current) return;
-      if (dropdown.current.contains(target) || trigger.current.contains(target))
+      if (
+        dropdown.current.contains(target as Node) ||
+        (trigger.current && trigger.current.contains(target as Node))
+      )
         return;
       setDropdownOpen(false);
     };

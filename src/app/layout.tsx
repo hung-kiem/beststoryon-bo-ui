@@ -5,6 +5,7 @@ import "@/css/style.css";
 import { ReactNode } from "react";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import React from "react";
 
 export const metadata: Metadata = {
   title: {
