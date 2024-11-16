@@ -1,4 +1,4 @@
-import useFlatpickr from "@/hooks/useFlatpickr";
+import useFlatpickr from "@hooks/useFlatpickr";
 import React, { useRef } from "react";
 
 type DatePickerProps = {
