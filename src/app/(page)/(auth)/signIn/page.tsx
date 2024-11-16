@@ -28,7 +28,7 @@ export default function LoginPage() {
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
-    window.location.href = "/dashboard";
+    window.location.href = "/story";
   };
 
   return (
