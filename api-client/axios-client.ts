@@ -14,7 +14,7 @@ axiosClient.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       const currentPath = window.location.pathname;
       if (currentPath === "/signIn") {
-        alert("User hoặc password không hợp lệ.");
+        alert("User hoặc password không đúng.");
       } else {
         alert("Bạn chưa đăng nhập.");
         window.location.href = "/signIn";
