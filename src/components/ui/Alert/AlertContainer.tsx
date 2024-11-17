@@ -1,5 +1,6 @@
+import React from "react";
 import { useEffect } from "react";
-import { useAlertStore } from "@/hooks/useAlertStore";
+import { useAlertStore } from "@hooks/useAlertStore";
 import Alert from "./Alert";
 
 const AlertContainer = () => {
@@ -10,7 +11,7 @@ const AlertContainer = () => {
       const timers = alerts.map((alert) =>
         setTimeout(() => {
           hideAlert(alert.id);
-        }, 3000),
+        }, 3000)
       );
 
       return () => {
