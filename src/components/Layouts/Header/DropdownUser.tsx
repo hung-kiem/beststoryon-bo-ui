@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ClickOutside from "@/components/ClickOutside";
 import AvatarCanvas from "./AvatarCanvas";
+import authApi from "@apiClient/auth-api";
 
 interface DropdownUserProps {
   username: string;
@@ -10,7 +11,8 @@ interface DropdownUserProps {
 const DropdownUser = ({ username, role }: DropdownUserProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await authApi.logout();
     window.location.href = "/signIn";
   };
 

@@ -1,47 +1,39 @@
 import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
-import { LoginResponse } from "@/types/auth";
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const sessionState = searchParams.get("session_state");
-  const code = searchParams.get("code");
-
-  if (!sessionState || !code) {
-    return NextResponse.json(
-      { message: "Missing session_state or code" },
-      { status: 400 }
-    );
-  }
-
-  const targetUrl = `${process.env.CORE_API}/v1/authentication/authorized_sso`;
-
+export async function POST(req: NextRequest) {
   try {
-    const response = await axios.get<LoginResponse>(targetUrl, {
-      params: {
-        session_state: sessionState,
-        code: code,
-      },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const headers: { "Content-Type": string; Authorization?: string } = {
+      "Content-Type": "application/json",
+    };
+
+    const url = `${process.env.CORE_API}/api/auth/login`;
+    console.log("********************* url: ", url);
+
+    const fetchOptions: RequestInit = {
+      method: "POST",
+      headers,
+    };
+
+    const body = await req.json();
+    console.log("********************* req.body: ", body);
+    fetchOptions.body = JSON.stringify(body);
+
+    const response = await fetch(url, fetchOptions);
+    console.log("********************* response: ", response);
 
     if (response.status !== 200) {
-      throw new Error(`Request failed with status ${response.status}`);
-    }
-
-    const data = response.data;
-    if (data.code !== "00") {
       return NextResponse.json({ message: "Login failed" }, { status: 401 });
     }
 
-    const accessToken = data.data.accessToken;
+    const data = await response.json();
+    console.log("********************* data: ", data);
+
+    const accessToken = data.jwtToken;
     const expiredAt = new Date();
     expiredAt.setSeconds(Number(process.env.TOKEN_EXPIRATION) || 15 * 60);
     if (accessToken && expiredAt) {
       const response = NextResponse.json(
-        { message: "Login successful", data: data.data },
+        { message: "Login successful", data },
         { status: 200 }
       );
 

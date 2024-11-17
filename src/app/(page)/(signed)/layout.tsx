@@ -24,10 +24,7 @@ export default function RootLayout({
 
   console.log("RootLayout");
 
-  if (
-    pathname === "/signIn" ||
-    pathname === "/v1/authentication/authorized_sso"
-  ) {
+  if (pathname === "/signIn") {
     return (
       <>
         <SWRConfig

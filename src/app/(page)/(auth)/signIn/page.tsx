@@ -8,13 +8,16 @@ import { useForm, Controller } from "react-hook-form";
 import Input from "@/components/ui/Input/Input";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useState } from "react";
-
+import authApi from "@apiClient/auth-api";
+import { LoginRequest } from "@/types/auth";
+import { useRouter } from "next/navigation";
 interface FormValues {
   username: string;
   password: string;
 }
 
 export default function LoginPage() {
+  const router = useRouter();
   const [colorMode, setColorMode] = useColorMode();
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -23,12 +26,15 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const passwordPattern =
-    /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{12,}$/;
-
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
-    window.location.href = "/story";
+  const onSubmit = async (data: FormValues) => {
+    const payload: LoginRequest = {
+      username: data.username,
+      password: data.password,
+      ipAddress: "",
+    };
+    const response = await authApi.login(payload);
+    console.log("********************* response login: ", response);
+    router.push("/story");
   };
 
   return (
@@ -80,11 +86,6 @@ export default function LoginPage() {
           control={control}
           rules={{
             required: "Vui lòng nhập mật khẩu",
-            pattern: {
-              value: passwordPattern,
-              message:
-                "Mật khẩu cần ít nhất 12 ký tự, bao gồm 1 chữ số và 1 ký tự đặc biệt",
-            },
           }}
           render={({ field }) => (
             <div className="mb-6">

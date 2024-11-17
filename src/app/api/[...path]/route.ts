@@ -1,10 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
 
+function extendTokenExpiry(response: NextResponse, token: string) {
+  response.cookies.set("accessToken", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: process.env.TOKEN_EXPIRATION
+      ? parseInt(process.env.TOKEN_EXPIRATION, 10)
+      : 15 * 60,
+  });
+}
+
 async function handleRequest(req: NextRequest, method: "GET" | "POST") {
   try {
+    const cookies = req.cookies;
+    const accessToken = cookies.get("accessToken");
+    if (!accessToken) {
+      return NextResponse.json({ message: "Login failed" }, { status: 401 });
+    }
+
     const headers: { "Content-Type": string; Authorization?: string } = {
       "Content-Type": "application/json",
     };
+    if (accessToken) {
+      headers["Authorization"] = `Bearer ${accessToken.value}`;
+    }
 
     const urlBase = `${process.env.CORE_API}${req.nextUrl.pathname.replace(
       `/api`,
@@ -36,7 +56,9 @@ async function handleRequest(req: NextRequest, method: "GET" | "POST") {
     const data = await response.json();
     console.log("********************* data: ", data);
     const nextResponse = NextResponse.json(data, { status: response.status });
-
+    if (response.ok) {
+      extendTokenExpiry(nextResponse, accessToken.value);
+    }
     return nextResponse;
   } catch (error) {
     console.error("********************* ERROR: ", error);
