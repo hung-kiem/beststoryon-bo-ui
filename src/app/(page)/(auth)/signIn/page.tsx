@@ -60,7 +60,7 @@ export default function LoginPage() {
         </div>
         <div className="text-center mb-8">
           <span className="inline-block text-2xl font-bold uppercase text-primary dark:text-whiter">
-            {process.env.NEXT_PUBLIC_APP_LOGIN_TITLE}
+            Đăng nhập
           </span>
         </div>
 

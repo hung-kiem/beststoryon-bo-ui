@@ -9,10 +9,10 @@ import React from "react";
 
 export const metadata: Metadata = {
   title: {
-    template: process.env.DEFAULT_TITLE_TEMPLATE ?? "",
-    default: process.env.DEFAULT_TITLE_VALUE ?? "",
+    template: "BO",
+    default: "Back Office",
   },
-  description: process.env.DEFAULT_TITLE_DESCRIPTION,
+  description: "Back Office",
 };
 
 export default function RootLayout({
