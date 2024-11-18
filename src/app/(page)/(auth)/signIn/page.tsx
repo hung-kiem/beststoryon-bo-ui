@@ -59,9 +59,8 @@ export default function LoginPage() {
           </span>
         </div>
         <div className="text-center mb-8">
-          <span className="inline-block text-2xl font-bold uppercase text-primary dark:text-whiter">
-            Đăng nhập
-          </span>
+          Đăng nhập
+          <span className="inline-block text-2xl font-bold uppercase text-primary dark:text-whiter"></span>
         </div>
 
         <Controller
