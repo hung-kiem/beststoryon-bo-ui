@@ -65,20 +65,6 @@ export function TableBanner({
       center: true,
     },
     {
-      name: "Ảnh",
-      cell: (row: BannerData) =>
-        row.bannerUrl ? (
-          <img
-            src={row.bannerUrl}
-            alt="Banner"
-            className="object-cover rounded"
-            style={{ width: "100px", height: "60px" }}
-          />
-        ) : null,
-      center: true,
-      style: { textAlign: "center" },
-    },
-    {
       name: "Ngày tạo",
       selector: (row: BannerData) =>
         row.createdDate ? formatDateTime(row.createdDate) : "",
@@ -90,13 +76,6 @@ export function TableBanner({
       name: "Chức năng",
       cell: (row: BannerData) => (
         <div className="border-gray-5 alight-center flex w-full justify-center gap-2 border-l-2 pl-2">
-          <button
-            onClick={() => handleViewDetails(row.bannerId.toString())}
-            className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
-            title="Xem chi tiết"
-          >
-            <HiEye className="h-4 w-4" />
-          </button>
           <button
             onClick={() => handleEdit(row.bannerId.toString())}
             className="text-gray-700 flex w-10 items-center justify-center rounded-md bg-gray-2 px-2 py-1 text-sm font-medium hover:bg-gray-3 focus:outline-none"
@@ -111,10 +90,6 @@ export function TableBanner({
       center: true,
     },
   ];
-
-  const handleViewDetails = (id: string) => {
-    router.push(`/banner/${id}`);
-  };
 
   const handleEdit = (id: string) => {
     router.push(`/banner/edit/${id}`);

@@ -1,12 +1,8 @@
 "use client";
 
-import Footer, {
-  FooterButton,
-  FooterButtons,
-} from "@/components/commons/Form/SearchFooter";
-import SearchForm from "@/components/commons/Form/SearchForm";
 import BreadCrumb from "@/components/ui/Breadcrumb/Breadcrumb";
 import BreadcrumbItem from "@/components/ui/Breadcrumb/BreadcrumbItem";
+import Button from "@/components/ui/Buttons/Button";
 import Input from "@/components/ui/Input/Input";
 import Select from "@/components/ui/Select/Select";
 import { AddBannerRequest, AddBannerResponse } from "@/types/banner";
@@ -18,14 +14,10 @@ import { Controller, useForm } from "react-hook-form";
 interface FormData {
   bannerName: string;
   status: string;
-  bannerType: "IMAGE" | "HTML";
-  bannerDesc: string;
   bannerPos: string;
   bannerPage: string;
-  bannerUrl: string;
-  bannerLinkTo: string;
-  bannerOpenType: "_self" | "_blank" | "_parent" | "_top";
   bannerHTML: string;
+  inputSource: string;
 }
 
 const statusOptions = [
@@ -33,54 +25,54 @@ const statusOptions = [
   { label: "Không hoạt động", value: "0" },
 ];
 
-const typeOptions = [
-  { label: "Hình ảnh", value: "IMAGE" },
-  //   { label: "Html", value: "HTML" },
-];
-
 const posOptions = [
-  { label: "Top", value: "TOP" },
-  { label: "Bottom", value: "BOTTOM" },
+  { label: "Top", value: "1" },
+  { label: "Middle", value: "2" },
+  { label: "Bottom", value: "3" },
 ];
 
 const pageOptions = [
-  { label: "Trang chủ", value: "HOME" },
-  { label: "Danh mục", value: "CATEGORY" },
+  { label: "All", value: "ALL" },
+  { label: "Chapter", value: "CHAPTER" },
+  { label: "Story", value: "STORY" },
+  { label: "Home", value: "HOME" },
+  { label: "Category", value: "CATEGORY" },
   { label: "Tag", value: "TAG" },
   { label: "Update", value: "UPDATE" },
+  { label: "Trending", value: "TRENDING" },
+  { label: "New Release", value: "NEW_RELEASE" },
+  { label: "Hot", value: "HOT" },
+  { label: "Author", value: "AUTHOR" },
 ];
-
-const openTypeOptions = [{ label: "Mở trong cửa sổ mới", value: "_blank" }];
 
 const BannerCreatePage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
-  const { control, handleSubmit, setValue, watch } = useForm<FormData>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>({
     defaultValues: {
       bannerName: "",
       status: "1",
-      bannerType: "IMAGE",
-      bannerDesc: "",
-      bannerPos: "TOP",
-      bannerPage: "HOME",
-      bannerUrl: "",
-      bannerLinkTo: "",
-      bannerOpenType: "_blank",
+      bannerPos: "1",
+      bannerPage: "ALL",
       bannerHTML: "",
+      inputSource: "",
     },
   });
   const fetchData = useCallback(async (formData: FormData) => {
     const payload: AddBannerRequest = {
       bannerName: formData.bannerName,
       status: formData.status,
-      bannerType: formData.bannerType,
-      bannerDesc: formData.bannerDesc,
       bannerPos: formData.bannerPos,
       bannerPage: formData.bannerPage,
-      bannerUrl: formData.bannerUrl,
-      bannerLinkTo: formData.bannerLinkTo,
-      bannerOpenType: formData.bannerOpenType,
       bannerHTML: formData.bannerHTML,
+      bannerDesc: formData.inputSource,
+      bannerType: "HTML",
     };
 
     try {
@@ -110,168 +102,159 @@ const BannerCreatePage = () => {
         ></BreadcrumbItem>
         <BreadcrumbItem pageName="Thêm mới banner" path="#" />
       </BreadCrumb>
-      <SearchForm>
-        <Controller
-          name="bannerName"
-          control={control}
-          render={() => (
-            <Input
-              label="Tên banner"
-              layout="vertical"
-              className="w-full"
-              type="text"
-              placeholder="Nhập tên banner"
-              value={watch("bannerName")}
-              onChange={(e) => {
-                setValue("bannerName", e.target.value);
-              }}
-            />
-          )}
-        />
-        <Controller
-          name="status"
-          control={control}
-          render={() => (
-            <Select
-              title="Trạng thái"
-              label="Trạng thái"
-              options={statusOptions}
-              value={watch("status")}
-              onSelect={(value) => {
-                setValue("status", value);
-              }}
-            />
-          )}
-        />
-        <Controller
-          name="bannerType"
-          control={control}
-          render={() => (
-            <Select
-              title="Loại banner"
-              label="Loại banner"
-              options={typeOptions}
-              value={watch("bannerType")}
-              onSelect={(value) => {
-                setValue("bannerType", value as "IMAGE" | "HTML");
-              }}
-            />
-          )}
-        />
-        <Controller
-          name="bannerDesc"
-          control={control}
-          render={() => (
-            <Input
-              label="Mô tả"
-              layout="vertical"
-              className="w-full"
-              type="text"
-              placeholder="Nhập mô tả"
-              value={watch("bannerDesc")}
-              onChange={(e) => {
-                setValue("bannerDesc", e.target.value);
-              }}
-            />
-          )}
-        />
-        <Controller
-          name="bannerPos"
-          control={control}
-          render={() => (
-            <Select
-              title="Vị trí"
-              label="Vi trí"
-              options={posOptions}
-              value={watch("bannerPos")}
-              onSelect={(value) => {
-                setValue("bannerPos", value as "TOP" | "BOTTOM");
-              }}
-            />
-          )}
-        />
-        <Controller
-          name="bannerPage"
-          control={control}
-          render={() => (
-            <Select
-              title="Trang hiển thị"
-              label="Trang hiển thị"
-              options={pageOptions}
-              value={watch("bannerPage")}
-              onSelect={(value) => {
-                setValue(
-                  "bannerPage",
-                  value as "HOME" | "CATEGORY" | "TAG" | "UPDATE"
-                );
-              }}
-            />
-          )}
-        />
-        <Controller
-          name="bannerUrl"
-          control={control}
-          render={() => (
-            <Input
-              label="Link ảnh"
-              layout="vertical"
-              className="w-full"
-              type="text"
-              placeholder="Nhập link ảnh"
-              value={watch("bannerUrl")}
-              onChange={(e) => {
-                setValue("bannerUrl", e.target.value);
-              }}
-            />
-          )}
-        />
-        <Controller
-          name="bannerLinkTo"
-          control={control}
-          render={() => (
-            <Input
-              label="Link to"
-              layout="vertical"
-              className="w-full"
-              type="text"
-              placeholder="Nhập link to"
-              value={watch("bannerLinkTo")}
-              onChange={(e) => {
-                setValue("bannerLinkTo", e.target.value);
-              }}
-            />
-          )}
-        />
-        <Controller
-          name="bannerOpenType"
-          control={control}
-          render={() => (
-            <Select
-              title="Mở banner"
-              label="Mở banner"
-              options={openTypeOptions}
-              value={watch("bannerOpenType")}
-              onSelect={(value) => {
-                setValue(
-                  "bannerOpenType",
-                  value as "_self" | "_blank" | "_parent" | "_top"
-                );
-              }}
-            />
-          )}
-        />
-      </SearchForm>
-      <Footer>
-        <FooterButtons>
-          <FooterButton
-            type="primary"
-            onClick={handleSubmit(onSubmit)}
-            isLoading={isLoading}
-          >
-            Lưu
-          </FooterButton>
-        </FooterButtons>
-      </Footer>
+      <div className="mb-4 flex flex-col gap-4 rounded-lg bg-white p-4 dark:bg-black">
+        <div
+          className="grid grow grid-cols-1
+                  gap-4
+                  sm:grid-cols-2
+                  md:grid-cols-3
+                  lg:grid-cols-4"
+        >
+          <Controller
+            name="bannerName"
+            control={control}
+            render={() => (
+              <Input
+                label="Tên banner"
+                layout="vertical"
+                className="w-full"
+                type="text"
+                placeholder="Nhập tên banner"
+                value={watch("bannerName")}
+                onChange={(e) => {
+                  setValue("bannerName", e.target.value);
+                }}
+              />
+            )}
+          />
+          <Controller
+            name="status"
+            control={control}
+            render={() => (
+              <Select
+                title="Trạng thái"
+                label="Trạng thái"
+                options={statusOptions}
+                value={watch("status")}
+                onSelect={(value) => {
+                  setValue("status", value);
+                }}
+              />
+            )}
+          />
+          <Controller
+            name="bannerPos"
+            control={control}
+            render={() => (
+              <Select
+                title="Vị trí"
+                label="Vi trí"
+                options={posOptions}
+                value={watch("bannerPos")}
+                onSelect={(value) => {
+                  setValue("bannerPos", value as "TOP" | "MIDDLE" | "BOTTOM");
+                }}
+              />
+            )}
+          />
+          <Controller
+            name="bannerPage"
+            control={control}
+            render={() => (
+              <Select
+                title="Trang hiển thị"
+                label="Trang hiển thị"
+                options={pageOptions}
+                value={watch("bannerPage")}
+                onSelect={(value) => {
+                  setValue(
+                    "bannerPage",
+                    value as "HOME" | "CATEGORY" | "TAG" | "UPDATE"
+                  );
+                }}
+              />
+            )}
+          />
+        </div>
+        <div
+          className="grid grow grid-cols-1
+                  gap-4
+                  sm:grid-cols-1
+                  md:grid-cols-2
+                  lg:grid-cols-2"
+        >
+          <Controller
+            name="inputSource"
+            control={control}
+            rules={{
+              maxLength: {
+                value: 250,
+                message: "Input source tối đa 250 ký tự.",
+              },
+            }}
+            render={({ field }) => (
+              <div>
+                <label className="mb-3 block text-sm text-neutral-600 dark:text-white">
+                  Input source
+                </label>
+                <textarea
+                  {...field}
+                  value={watch("inputSource")}
+                  onChange={(e) => setValue("inputSource", e.target.value)}
+                  rows={12}
+                  className=" w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                ></textarea>
+                {errors.inputSource && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.inputSource.message}
+                  </p>
+                )}
+              </div>
+            )}
+          />
+          <Controller
+            name="bannerHTML"
+            control={control}
+            rules={{
+              maxLength: {
+                value: 1000,
+                message: "Banner HTML tối đa 1000 ký tự.",
+              },
+            }}
+            render={({ field }) => (
+              <div>
+                <label className="mb-3 block text-sm text-neutral-600 dark:text-white">
+                  HTML
+                </label>
+                <textarea
+                  {...field}
+                  value={watch("bannerHTML")}
+                  onChange={(e) => setValue("bannerHTML", e.target.value)}
+                  rows={12}
+                  className=" w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                ></textarea>
+                {errors.bannerHTML && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.bannerHTML.message}
+                  </p>
+                )}
+              </div>
+            )}
+          />
+        </div>
+        <div className="rounded-lg bg-white dark:border-strokedark dark:bg-boxdark">
+          <div className="flex flex-wrap justify-center gap-5">
+            <Button
+              onClick={handleSubmit(onSubmit)}
+              isLoading={isLoading}
+              type="primary"
+              size="large"
+            >
+              Lưu
+            </Button>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

@@ -40,15 +40,12 @@ export interface GetBannerDetailResponse {
 
 export interface AddBannerRequest {
   bannerName: string;
-  bannerType: "IMAGE" | "HTML";
-  bannerDesc: string;
   status: string;
   bannerPos?: string;
   bannerPage: string;
-  bannerUrl: string;
-  bannerLinkTo: string;
-  bannerOpenType: "_self" | "_blank" | "_parent" | "_top";
   bannerHTML?: string;
+  bannerDesc?: string;
+  bannerType: "IMAGE" | "HTML";
 }
 
 export interface AddBannerResponse extends BaseResponse {
@@ -58,15 +55,12 @@ export interface AddBannerResponse extends BaseResponse {
 export interface UpdateBannerRequest {
   bannerId: string;
   bannerName: string;
-  bannerType: "IMAGE" | "HTML";
-  bannerDesc: string;
   status: string;
   bannerPos?: string;
   bannerPage: string;
-  bannerUrl: string;
-  bannerLinkTo: string;
-  bannerOpenType: "_self" | "_blank" | "_parent" | "_top";
   bannerHTML?: string;
+  bannerDesc?: string;
+  bannerType: "IMAGE" | "HTML";
 }
 
 export interface UpdateBannerResponse extends BaseResponse {
