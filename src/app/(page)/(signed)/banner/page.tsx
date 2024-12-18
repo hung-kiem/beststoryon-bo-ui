@@ -27,11 +27,12 @@ interface FormData {
 }
 
 const initValues: FormData = {
-  status: "1",
+  status: "",
   bannerName: "",
 };
 
 const statusOptions = [
+  { label: "Tất cả", value: "" },
   { label: "Hoạt động", value: "1" },
   { label: "Không hoạt động", value: "0" },
 ];
