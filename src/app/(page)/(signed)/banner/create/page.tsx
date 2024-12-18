@@ -26,6 +26,7 @@ const statusOptions = [
 ];
 
 const posOptions = [
+  { label: "All", value: "0" },
   { label: "Top", value: "1" },
   { label: "Middle", value: "2" },
   { label: "Bottom", value: "3" },
@@ -58,7 +59,7 @@ const BannerCreatePage = () => {
     defaultValues: {
       bannerName: "",
       status: "1",
-      bannerPos: "1",
+      bannerPos: "0",
       bannerPage: "ALL",
       bannerHTML: "",
       inputSource: "",
@@ -152,7 +153,10 @@ const BannerCreatePage = () => {
                 options={posOptions}
                 value={watch("bannerPos")}
                 onSelect={(value) => {
-                  setValue("bannerPos", value as "TOP" | "MIDDLE" | "BOTTOM");
+                  setValue(
+                    "bannerPos",
+                    value as "ALL" | "TOP" | "MIDDLE" | "BOTTOM"
+                  );
                 }}
               />
             )}

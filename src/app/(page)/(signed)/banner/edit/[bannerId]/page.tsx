@@ -1,10 +1,5 @@
 "use client";
 
-import Footer, {
-  FooterButton,
-  FooterButtons,
-} from "@/components/commons/Form/SearchFooter";
-import SearchForm from "@/components/commons/Form/SearchForm";
 import Loader from "@/components/commons/Loader";
 import BreadCrumb from "@/components/ui/Breadcrumb/Breadcrumb";
 import BreadcrumbItem from "@/components/ui/Breadcrumb/BreadcrumbItem";
@@ -38,6 +33,7 @@ const statusOptions = [
 ];
 
 const posOptions = [
+  { label: "All", value: "0" },
   { label: "Top", value: "1" },
   { label: "Middle", value: "2" },
   { label: "Bottom", value: "3" },
@@ -89,15 +85,13 @@ const BannerEditPage = () => {
         bannerHTML: detail.data.bannerHTML,
         inputSource: detail.data.bannerDesc,
       });
-      console.log(">>>>>>>>> update form state");
     }
   }, [detail, reset]);
-  console.log(">>>>>>>>> form state", watch());
 
   useEffect(() => {
     if (detail) {
       setValue("status", detail.data.status);
-      setValue("bannerPos", detail.data.bannerPos || "1");
+      setValue("bannerPos", detail.data.bannerPos || "0");
       setValue("bannerPage", detail.data.bannerPage);
     }
   }, [detail, setValue]);
